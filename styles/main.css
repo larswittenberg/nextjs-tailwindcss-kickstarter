@@ -1,0 +1,42 @@
+/* For Debugging Only */
+/* @import "helpers/debugging.css";
+@import "helpers/htmllinting.css"; */
+
+
+@tailwind base;
+
+
+
+/* Write your own custom base styles here */
+::selection {
+	background-color: theme('colors.orange');;
+	color: #fff;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+@layer base {
+	html {
+		@apply font-mono;
+	}
+}
+
+
+
+/* Start purging... */
+@tailwind components;
+/* Stop purging. */
+
+/* Write your own custom component styles here */
+
+
+
+
+
+/* Start purging... */
+@tailwind utilities;
+/* Stop purging. */
+
+/* Your own custom utilities */
