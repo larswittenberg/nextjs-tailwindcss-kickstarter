@@ -8,9 +8,8 @@ class MyDocument extends Document {
 
 	render() {
 		return (
-			<Html lang="de">
+			<Html lang="en">
 				<Head>
-					<title>Next.js + Tailwind CSS Kickstarter</title>
 					<link href="/favicon.svg" rel="shortcut icon" />
 				</Head>
 				<body>
