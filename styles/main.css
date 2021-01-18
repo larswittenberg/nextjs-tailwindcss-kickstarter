@@ -19,7 +19,7 @@ html {
 
 @layer base {
 	html {
-		@apply font-mono;
+		@apply font-sans;
 	}
 }
 

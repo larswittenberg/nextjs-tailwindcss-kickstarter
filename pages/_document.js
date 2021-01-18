@@ -10,6 +10,7 @@ class MyDocument extends Document {
 		return (
 			<Html lang="de">
 				<Head>
+					<title>Next.js + Tailwind CSS Kickstarter</title>
 					<link href="/favicon.svg" rel="shortcut icon" />
 				</Head>
 				<body>
