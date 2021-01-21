@@ -34,7 +34,7 @@ export default function IndexPage() {
 			<h2 className="text-center mb-8 text-2xl">Next.js Image Demo</h2>
 			<figure>
 				<Image
-					src="/images/jonny-caspari-K8bxn2-hLMM-unsplash.jpg"
+					src="images/jonny-caspari-K8bxn2-hLMM-unsplash.jpg"
 					width="1280"
 					height="958"
 					alt="" />
