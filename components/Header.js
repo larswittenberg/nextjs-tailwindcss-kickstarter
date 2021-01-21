@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export default function Nav() {
+export default function Header() {
 	return (
 		<nav>
 			<ul className="flex items-center justify-between p-8">
