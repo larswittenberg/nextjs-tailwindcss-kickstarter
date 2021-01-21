@@ -12,7 +12,7 @@ const links = [
 
 export default function IndexPage() {
 	return (
-		<LayoutDefault className="lg:w-2/3 mx-4 lg:mx-auto">
+		<LayoutDefault>
 			<div className="py-20">
 				<h1 className="text-5xl text-center mb-12">
 					Next.js + Tailwind CSS Kickstarter
