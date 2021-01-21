@@ -34,10 +34,10 @@ export default function IndexPage() {
 			<h2 className="text-center mb-8 text-2xl">Next.js Image Demo</h2>
 			<figure>
 				<Image
-					src="images/jonny-caspari-K8bxn2-hLMM-unsplash.jpg"
-					width="1280"
-					height="958"
-					alt="" />
+					src="/images/jonny-caspari-K8bxn2-hLMM-unsplash.jpg"
+					width={1280}
+					height={958}
+					alt="Coastline Sunset Image from Jonny Caspari from Unsplash" />
 				<figcaption>
 					<span>Photo by <a href="https://unsplash.com/@jonnysplsh?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Jonny Caspari</a> on <a href="https://unsplash.com/t/nature?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 				</figcaption>
