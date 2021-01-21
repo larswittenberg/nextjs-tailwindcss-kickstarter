@@ -6,7 +6,14 @@ module.exports = {
 			colors: {
 				'orange': '#ef7c17',
 				'darkblue': '#1c2532',
-			}
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						// color: '#ff0',
+					},
+				},
+			},
 		},
 	},
 	variants: {
