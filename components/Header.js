@@ -5,7 +5,7 @@ export default function Header() {
 		<nav>
 			<ul className="flex items-center justify-between p-8">
 				<li>
-					<Link href="./">
+					<Link href="/">
 						<a className="no-underline text-accent-1 dark:text-gray-300">Project Website</a>
 					</Link>
 				</li>
