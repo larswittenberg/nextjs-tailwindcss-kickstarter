@@ -31,6 +31,16 @@ export default function IndexPage() {
 
 			<hr className="my-16" />
 
+			<h2 className="text-center mb-8 text-2xl">
+				<Link href="/subpage">
+					<a className="underline">Demo-Page with @tailwindcss/typography Plugin</a>
+				</Link>
+			</h2>
+
+
+			<hr className="my-16" />
+
+
 			<h2 className="text-center mb-8 text-2xl">Next.js Image Demo</h2>
 			<figure>
 				<Image
@@ -44,13 +54,6 @@ export default function IndexPage() {
 				</figcaption>
 			</figure>
 
-			<hr className="my-16" />
-
-			<h2 className="text-center mb-8 text-2xl">
-				<Link href="/subpage">
-					<a className="underline">Demo-Page with @tailwindcss/typography Plugin</a>
-				</Link>
-			</h2>
 
 		</LayoutDefault>
 	)
