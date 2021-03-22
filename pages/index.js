@@ -40,6 +40,15 @@ export default function IndexPage() {
 
 			<hr className="my-16" />
 
+			<p className="text-[#ff0]">
+				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id corrupti maxime similique quisquam sunt quis vero culpa <em>awesome</em> ipsum ullam vel odit eligendi, quo illum, aliquid sequi quae. Possimus, dignissimos!
+			</p>
+			<p className="">
+				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id corrupti maxime similique quisquam sunt quis vero culpa <em>awesome</em> ipsum ullam vel odit eligendi, quo illum, aliquid sequi quae. Possimus, dignissimos!
+			</p>
+
+			<hr className="my-16" />
+
 
 			<h2 className="text-center mb-8 text-2xl">Next.js Image Demo</h2>
 			<figure>
