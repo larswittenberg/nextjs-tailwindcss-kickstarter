@@ -41,7 +41,9 @@ export default function IndexPage() {
 			<hr className="my-16" />
 
 			<p className="text-[#ff0]">
-				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id corrupti maxime similique quisquam sunt quis vero culpa <em>awesome</em> ipsum ullam vel odit eligendi, quo illum, aliquid sequi quae. Possimus, dignissimos!
+				This paragraph uses a TailwindCSS Feature from the 'Just-in-Time Mode': Generate arbitrary styles without writing custom CSS.
+				<br />
+				The <code className="language-html">className="text-[#ff0]"</code> generates a class that is not part of the default TailwindCSS config and not a custom theme config. This is a specific ulitity class with a text-color: #ff0. <a href="https://tailwindcss.com/docs/just-in-time-mode" className="underline">Read more</a>
 			</p>
 			<p className="">
 				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id corrupti maxime similique quisquam sunt quis vero culpa <em>awesome</em> ipsum ullam vel odit eligendi, quo illum, aliquid sequi quae. Possimus, dignissimos!
