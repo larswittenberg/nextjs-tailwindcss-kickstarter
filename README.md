@@ -15,6 +15,8 @@
 * add custom fonts
 * add [twin.macro](https://github.com/ben-rogerson/twin.macro)?
 * check browser support
+* add ESLint
+* add environment variables (env) example
 
 ## Useful Links
 
