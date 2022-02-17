@@ -21,9 +21,9 @@ export default function IndexPage() {
 				<ul className="w-2/3 m-auto flex flex-wrap items-center justify-between">
 				{links.map(({ href, label }) => (
 					<li key={`${href}${label}`}>
-					<a href={href} className="p-1">
-						{label}
-					</a>
+						<a href={href} className="p-1">
+							{label}
+						</a>
 					</li>
 				))}
 				</ul>
@@ -41,9 +41,9 @@ export default function IndexPage() {
 			<hr className="my-16" />
 
 			<p className="text-[#f00] dark:text-[#ff0]">
-				This paragraph uses a TailwindCSS Feature from the 'Just-in-Time Mode': Generate arbitrary styles without writing custom CSS.
+				This paragraph uses a TailwindCSS Feature from the Just-in-Time Mode: Generate arbitrary styles without writing custom CSS.
 				<br />
-				The <code className="">className="text-[#f00]"</code> generates a class that is not part of the default TailwindCSS config and not a custom theme config. This is a specific ulitity class with a text-color: #f00. And for color-schema dark <code className="">className="dark:text-[#ff0]"</code> <a href="https://tailwindcss.com/docs/just-in-time-mode" className="">Read more</a>
+				The <code className="">className=&quot;text-[#f00]&quot;</code> generates a class that is not part of the default TailwindCSS config and not a custom theme config. This is a specific ulitity class with a text-color: #f00. And for color-schema dark <code className="">className=&quot;dark:text-[#ff0]&quot;</code> <a href="https://tailwindcss.com/docs/just-in-time-mode" className="">Read more</a>
 			</p>
 			<p className="">
 				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id corrupti maxime similique quisquam sunt quis vero culpa <em>awesome</em> ipsum ullam vel odit eligendi, quo illum, aliquid sequi quae. Possimus, dignissimos!

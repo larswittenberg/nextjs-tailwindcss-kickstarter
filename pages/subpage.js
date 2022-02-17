@@ -28,7 +28,7 @@ export default function Subpage() {
 					base styles.
 				</p>
 				<pre>
-					<code className="language-html">&lt;article class="prose"&gt;
+					<code className="language-html">&lt;article class=&quot;prose&quot;&gt;
 					&lt;h1&gt;Garlic bread with cheese: What the science tells us&lt;/h1&gt;
 					&lt;p&gt;
 						For years parents have espoused the health benefits of eating garlic bread with cheese to their
