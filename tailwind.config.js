@@ -1,11 +1,8 @@
 module.exports = {
-	mode: 'jit',
-	// purge: false,
-	purge: [
+	content: [
 		'./pages/**/*.{js,jsx,ts,tsx}',
 		'./components/**/*.{js,jsx,ts,tsx}',
 	],
-	darkMode: 'media', // or 'media' or 'class'
 	theme: {
 		extend: {
 			colors: {
@@ -20,9 +17,6 @@ module.exports = {
 				},
 			},
 		},
-	},
-	variants: {
-		extend: {},
 	},
 	plugins: [
 		require('@tailwindcss/typography'),
