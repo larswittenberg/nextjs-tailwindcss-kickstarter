@@ -21,7 +21,7 @@ export default function IndexPage() {
 				<ul className="w-2/3 m-auto flex flex-wrap items-center justify-between">
 				{links.map(({ href, label }) => (
 					<li key={`${href}${label}`}>
-					<a href={href} className="underline p-1">
+					<a href={href} className="p-1">
 						{label}
 					</a>
 					</li>
@@ -33,7 +33,7 @@ export default function IndexPage() {
 
 			<h2 className="text-center mb-8 text-2xl">
 				<Link href="/subpage">
-					<a className="underline">Demo-Page with @tailwindcss/typography Plugin</a>
+					<a className="">Demo-Page with @tailwindcss/typography Plugin</a>
 				</Link>
 			</h2>
 
@@ -43,7 +43,7 @@ export default function IndexPage() {
 			<p className="text-[#ff0]">
 				This paragraph uses a TailwindCSS Feature from the 'Just-in-Time Mode': Generate arbitrary styles without writing custom CSS.
 				<br />
-				The <code className="language-html">className="text-[#ff0]"</code> generates a class that is not part of the default TailwindCSS config and not a custom theme config. This is a specific ulitity class with a text-color: #ff0. <a href="https://tailwindcss.com/docs/just-in-time-mode" className="underline">Read more</a>
+				The <code className="language-html">className="text-[#ff0]"</code> generates a class that is not part of the default TailwindCSS config and not a custom theme config. This is a specific ulitity class with a text-color: #ff0. <a href="https://tailwindcss.com/docs/just-in-time-mode" className="">Read more</a>
 			</p>
 			<p className="">
 				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id corrupti maxime similique quisquam sunt quis vero culpa <em>awesome</em> ipsum ullam vel odit eligendi, quo illum, aliquid sequi quae. Possimus, dignissimos!

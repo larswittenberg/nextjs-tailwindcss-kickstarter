@@ -3,7 +3,7 @@ import LayoutDefault from '../components/LayoutDefault'
 export default function Subpage() {
 	return (
 		<LayoutDefault>
-			<div className="prose prose-sm sm:prose lg:prose-lg mx-auto">
+			<div className="prose prose-sm prose-a:no-underline sm:prose-a:no-underline sm:prose lg:prose-lg mx-auto">
 				<h1 className="">
 					Demo-Page with @tailwindcss-typography Plugin
 				</h1>
@@ -44,7 +44,7 @@ export default function Subpage() {
 					</code>
 				</pre>
 				<p>
-					For more information about how to use the plugin and the features it includes, <a href="https://github.com/tailwindcss/typography/blob/master/README.md">read the documentation</a>.
+					For more information about how to use the plugin and the features it includes, <a href="https://tailwindcss.com/docs/typography-plugin">read the documentation</a>.
 				</p>
 				<hr />
 				<h2>What to expect from here on out</h2>
@@ -122,8 +122,7 @@ export default function Subpage() {
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias eveniet odit magni dicta fuga assumenda, nam aperiam. Porro recusandae fuga, unde optio mollitia sint laborum ex beatae itaque, assumenda soluta?
 				</p>
-				<h4>We haven't used an<code>h4</code>yet
-				</h4>
+				<h4>We haven't used an<code>h4</code>yet</h4>
 			</div>
 		</LayoutDefault>
 	)
