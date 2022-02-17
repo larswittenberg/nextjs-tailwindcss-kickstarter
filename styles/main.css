@@ -30,7 +30,6 @@ p {
 	@apply mb-2;
 }
 
-
 .prose h1,
 .prose h2,
 .prose h3,
@@ -43,4 +42,9 @@ p {
 .prose em,
 .prose a {
 	@apply dark:text-gray-200 !important;
+}
+
+code {
+	@apply text-stone-200 text-sm py-1 px-2 rounded-md;
+	background-color: black;
 }
