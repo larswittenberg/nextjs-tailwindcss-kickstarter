@@ -10,7 +10,6 @@ export default {
 		type: 'website',
 		locale: 'en_GB',
 		url: url,
-		title,
 		description,
 	},
 		twitter: {
