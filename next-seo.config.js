@@ -1,17 +1,16 @@
 const title = 'Next.js + Tailwind CSS Kickstarter';
 const description = 'Basic template setup with Next.js + Tailwind CSS and some helpers.';
-const url = 'https://nextjs-tailwindcss-kickstarter.vercel.app/';
 
 const SEO = {
 	title,
 	description,
-	canonical: url,
+	canonical: 'https://nextjs-tailwindcss-kickstarter.vercel.app/',
 	openGraph: {
 		type: 'website',
 		locale: 'en_GB',
-		url: url,
+		url: 'https://nextjs-tailwindcss-kickstarter.vercel.app/',
 		title,
-		description,
+		description
 	},
 	twitter: {
 		handle: '@larswittenberg',
