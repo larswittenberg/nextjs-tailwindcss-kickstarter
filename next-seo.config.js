@@ -10,9 +10,10 @@ export default {
 		type: 'website',
 		locale: 'en_GB',
 		url: url,
+		title: title,
 		description,
 	},
-		twitter: {
+	twitter: {
 		handle: '@larswittenberg',
 		site: '@larswittenberg',
 		cardType: 'summary_large_image',
