@@ -1,8 +1,8 @@
-const title = 'Next.js + Tailwind CSS Kickstarter'
-const description = 'Basic template setup with Next.js + Tailwind CSS and some helpers.'
-const url = 'https://nextjs-tailwindcss-kickstarter.vercel.app/'
+const title = 'Next.js + Tailwind CSS Kickstarter';
+const description = 'Basic template setup with Next.js + Tailwind CSS and some helpers.';
+const url = 'https://nextjs-tailwindcss-kickstarter.vercel.app/';
 
-export default {
+const SEO = {
 	title,
 	description,
 	canonical: url,
@@ -10,7 +10,7 @@ export default {
 		type: 'website',
 		locale: 'en_GB',
 		url: url,
-		title: title,
+		title,
 		description,
 	},
 	twitter: {
@@ -19,3 +19,5 @@ export default {
 		cardType: 'summary_large_image',
 	},
 };
+
+export default SEO;
