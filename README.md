@@ -1,6 +1,11 @@
-# Kickstarter with Next.js & Tailwind CSS
+# Kickstarter Tempalte with Next.js & Tailwind CSS
 
-[Website](https://nextjs-tailwindcss-kickstarter.vercel.app/)
+[Visit Demo-Website](https://nextjs-tailwindcss-kickstarter.vercel.app/)
+
+## Tech Stack
+
+* [Next.js](https://nextjs.org/)
+* [TailwindCSS](https://tailwindcss.com/)
 
 ## Development
 
@@ -10,13 +15,14 @@
 
 `yarn start` Runs the built app in production mode.
 
+`yarn lint` Runs ESLint
+
+`yarn format` Runs Prettier
+
 ## todos
 
 * add custom fonts
-* add [twin.macro](https://github.com/ben-rogerson/twin.macro)?
 * check browser support
-* add ESLint
-* add environment variables (env) example
 
 ## Useful Links
 
