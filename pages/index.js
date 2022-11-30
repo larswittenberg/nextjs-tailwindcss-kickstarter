@@ -29,9 +29,11 @@ export default function IndexPage() {
 
 			<hr className="my-16" />
 
-			<h2 className="text-center mb-8 text-2xl">
-				<Link href="/subpage">Demo-Page with @tailwindcss/typography Plugin</Link>
-			</h2>
+			<div className="flex flex-col justify-center items-center">
+				<Link className="text-center mb-8 text-2xl" href="/sub-page">Demo-Page with @tailwindcss/typography Plugin</Link>
+				<br />
+				<Link className="text-center text-2xl" href="/mdx-page">Demo-Page written in Markdown</Link>
+			</div>
 
 			<hr className="my-16" />
 
