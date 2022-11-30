@@ -9,16 +9,14 @@ export default function Header() {
 						Project Website
 					</Link>
 				</li>
-				<ul className="flex items-center justify-between space-x-4">
-					<li>
-						<a
-							href="https://github.com/larswittenberg/nextjs-tailwindcss-kickstarter"
-							className="no-underline dark:text-gray-300"
-						>
-							GitHub
-						</a>
-					</li>
-				</ul>
+				<li className="flex items-center justify-between space-x-4">
+					<a
+						href="https://github.com/larswittenberg/nextjs-tailwindcss-kickstarter"
+						className="no-underline dark:text-gray-300"
+					>
+						GitHub
+					</a>
+				</li>
 			</ul>
 		</nav>
 	);
