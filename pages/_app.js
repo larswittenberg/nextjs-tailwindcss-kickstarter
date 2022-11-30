@@ -1,7 +1,7 @@
-import '../styles/main.css'
-import { DefaultSeo } from 'next-seo'
+import '../styles/main.css';
+import { DefaultSeo } from 'next-seo';
 
-import SEO from '../next-seo.config'
+import SEO from '../next-seo.config';
 
 export default function App({ Component, pageProps }) {
 	return (
@@ -10,5 +10,5 @@ export default function App({ Component, pageProps }) {
 			<DefaultSeo {...SEO} />
 			<Component {...pageProps} />
 		</>
-	)
+	);
 }
