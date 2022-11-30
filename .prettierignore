@@ -1,0 +1,17 @@
+# Ignore artifacts
+build
+coverage
+
+# Basics
+package.json
+
+# Ignore all HTML files
+*.html
+
+# Next.js specific
+*.md
+**/.next/**
+**/_next/**
+**/dist/**
+out
+public
