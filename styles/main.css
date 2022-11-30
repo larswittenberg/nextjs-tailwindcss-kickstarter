@@ -16,11 +16,14 @@ body {
 }
 
 a {
-	border-bottom: 1px solid theme("colors.orange");
 	@apply transition-all;
+	text-decoration-line: underline;
+	text-decoration-color: theme("colors.orange");
+	text-decoration-thickness: 2px;
+	text-underline-offset: 4px;
 
 	&:hover {
-		border-bottom-width: 3px;
+		text-decoration-thickness: 4px;
 	}
 }
 

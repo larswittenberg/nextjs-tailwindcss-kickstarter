@@ -3,7 +3,7 @@ import LayoutDefault from '../components/LayoutDefault';
 export default function Subpage() {
 	return (
 		<LayoutDefault>
-			<div className="prose prose-sm prose-a:no-underline sm:prose-a:no-underline sm:prose lg:prose-lg mx-auto">
+			<div className="prose prose-sm sm:prose lg:prose-lg mx-auto">
 				<h1 className="">Demo-Page with @tailwindcss-typography Plugin</h1>
 				<p className="lead">
 					Until now, trying to style an article, document, or blog post with Tailwind has been a tedious task
