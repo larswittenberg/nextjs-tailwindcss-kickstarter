@@ -39,13 +39,20 @@ p {
 .prose li,
 .prose td,
 .prose th,
-.prose code,
 .prose em,
 .prose a {
-	@apply dark:text-gray-200 !important;
+	@apply text-gray-800 dark:text-gray-200;
 }
 
-code {
-	@apply text-stone-200 text-sm py-1 px-2 rounded-md;
-	background-color: black;
+.prose code {
+	@apply text-stone-200 dark:text-gray-200 text-sm py-1 px-1 mx-1 rounded-md;
+	background-color: rgb(74, 74, 74);
+}
+
+.prose pre {
+	background-color: rgb(74, 74, 74);
+}
+
+.prose pre code {
+	background-color: transparent;
 }
