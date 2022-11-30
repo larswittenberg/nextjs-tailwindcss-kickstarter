@@ -23,7 +23,6 @@
 
 * add a google font with `@next/font`
 * upgrade to Next.js `/app`-folder structure
-* add MDX via `@next/mdx` for markdown support
 * check browser support
 
 ## Useful Links
