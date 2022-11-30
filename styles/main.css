@@ -2,14 +2,12 @@
 /* @import "helpers/debugging.css";  */
 /* @import "helpers/htmllinting.css"; */
 
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 ::selection {
-	background-color: theme('colors.orange');
+	background-color: theme("colors.orange");
 	color: #fff;
 }
 
@@ -18,7 +16,7 @@ body {
 }
 
 a {
-	border-bottom: 1px solid theme('colors.orange');
+	border-bottom: 1px solid theme("colors.orange");
 	@apply transition-all;
 
 	&:hover {
