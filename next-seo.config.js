@@ -10,7 +10,7 @@ const SEO = {
 		locale: 'en_GB',
 		url: 'https://nextjs-tailwindcss-kickstarter.vercel.app/',
 		title,
-		description
+		description,
 	},
 	twitter: {
 		handle: '@larswittenberg',

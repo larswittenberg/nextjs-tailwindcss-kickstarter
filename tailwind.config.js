@@ -1,13 +1,10 @@
 module.exports = {
-	content: [
-		'./pages/**/*.{js,jsx,ts,tsx}',
-		'./components/**/*.{js,jsx,ts,tsx}',
-	],
+	content: ['./pages/**/*.{js,jsx,ts,tsx}', './components/**/*.{js,jsx,ts,tsx}'],
 	theme: {
 		extend: {
 			colors: {
-				'orange': '#ef7c17',
-				'darkblue': '#1c2532',
+				orange: '#ef7c17',
+				darkblue: '#1c2532',
 			},
 			typography: {
 				DEFAULT: {
@@ -18,7 +15,5 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [
-		require('@tailwindcss/typography'),
-	],
-}
+	plugins: [require('@tailwindcss/typography')],
+};
