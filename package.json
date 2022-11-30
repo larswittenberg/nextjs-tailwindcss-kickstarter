@@ -37,6 +37,7 @@
     "@next/eslint-plugin-next": "^13.0.5",
     "eslint": "^8.28.0",
     "eslint-config-next": "^13.0.5",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "2.8.0"
