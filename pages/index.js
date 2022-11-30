@@ -33,7 +33,7 @@ export default function IndexPage() {
 
 			<h2 className="text-center mb-8 text-2xl">
 				<Link href="/subpage">
-					<a className="">Demo-Page with @tailwindcss/typography Plugin</a>
+					Demo-Page with @tailwindcss/typography Plugin
 				</Link>
 			</h2>
 
