@@ -62,6 +62,7 @@ export default function IndexPage() {
 					width={1920}
 					height={1280}
 					alt="Alpe di Siusi, Italia from Pietro De Grandi from Unsplash"
+					priority
 				/>
 				<figcaption>
 					<span>
