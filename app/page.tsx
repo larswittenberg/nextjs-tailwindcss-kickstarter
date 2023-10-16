@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,7 +11,6 @@ const links = [
 	{ href: 'https://nextjs.org/', label: 'Next.js' },
 	{ href: 'https://tailwindcss.com/', label: 'Tailwind CSS' },
 	{ href: 'https://purgecss.com/', label: 'PurgeCSS' },
-	{ href: 'https://github.com/garmeeh/next-seo', label: 'Next SEO' },
 	{ href: 'https://tailwindcss.com/docs/typography-plugin', label: '@tailwindcss/typography Plugin' },
 ];
 

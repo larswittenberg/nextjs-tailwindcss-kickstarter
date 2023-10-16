@@ -1,3 +1,9 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'TailwindCSS Typography Plugin | Next.js + Tailwind CSS Kickstarter',
+}
+
 export default function Page() {
 	return (
 		<div className="prose prose-sm sm:prose lg:prose-lg mx-auto">
