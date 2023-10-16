@@ -5,7 +5,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
 	title: 'Next.js + Tailwind CSS Kickstarter',
 	description: 'Basic template setup with Next.js + Tailwind CSS and some helpers.',
-}
+};
 
 const links = [
 	{ href: 'https://nextjs.org/', label: 'Next.js' },
@@ -34,9 +34,13 @@ export default function Page() {
 			<hr className="my-16" />
 
 			<div className="flex flex-col justify-center items-center">
-				<Link className="text-center mb-8 text-2xl" href="/sub-page">Demo-Page with @tailwindcss/typography Plugin</Link>
+				<Link className="text-center mb-8 text-2xl" href="/sub-page">
+					Demo-Page with @tailwindcss/typography Plugin
+				</Link>
 				<br />
-				<Link className="text-center text-2xl" href="/mdx-page">Demo-Page written in Markdown</Link>
+				<Link className="text-center text-2xl" href="/mdx-page">
+					Demo-Page written in Markdown
+				</Link>
 			</div>
 
 			<hr className="my-16" />

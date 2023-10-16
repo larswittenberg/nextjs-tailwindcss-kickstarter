@@ -1,21 +1,21 @@
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: 'TailwindCSS Typography Plugin | Next.js + Tailwind CSS Kickstarter',
-}
+};
 
 export default function Page() {
 	return (
 		<div className="prose prose-sm sm:prose lg:prose-lg mx-auto">
 			<h1 className="">Demo-Page with @tailwindcss-typography Plugin</h1>
 			<p className="lead">
-				Until now, trying to style an article, document, or blog post with Tailwind has been a tedious task
-				that required a keen eye for typography and a lot of complex custom CSS.
+				Until now, trying to style an article, document, or blog post with Tailwind has been a tedious task that
+				required a keen eye for typography and a lot of complex custom CSS.
 			</p>
 			<p>
 				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id corrupti maxime similique quisquam sunt
-				quis vero culpa <em>awesome</em> ipsum ullam vel odit eligendi, quo illum, aliquid sequi quae.
-				Possimus, dignissimos!
+				quis vero culpa <em>awesome</em> ipsum ullam vel odit eligendi, quo illum, aliquid sequi quae. Possimus,
+				dignissimos!
 			</p>
 			<blockquote>
 				<p>
@@ -33,12 +33,12 @@ export default function Page() {
 			</p>
 			<pre>
 				<code className="language-html">
-					&lt;article class=&quot;prose&quot;&gt; &lt;h1&gt;Garlic bread with cheese: What the science
-					tells us&lt;/h1&gt; &lt;p&gt; For years parents have espoused the health benefits of eating
-					garlic bread with cheese to their children, with the food earning such an iconic status in our
-					culture that kids will often dress up as warm, cheesy loaf for Halloween. &lt;/p&gt; &lt;p&gt;
-					But a recent study shows that the celebrated appetizer may be linked to a series of rabies cases
-					springing up around the country. &lt;/p&gt; &lt;!-- ... --&gt; &lt;/article&gt;
+					&lt;article class=&quot;prose&quot;&gt; &lt;h1&gt;Garlic bread with cheese: What the science tells
+					us&lt;/h1&gt; &lt;p&gt; For years parents have espoused the health benefits of eating garlic bread
+					with cheese to their children, with the food earning such an iconic status in our culture that kids
+					will often dress up as warm, cheesy loaf for Halloween. &lt;/p&gt; &lt;p&gt; But a recent study
+					shows that the celebrated appetizer may be linked to a series of rabies cases springing up around
+					the country. &lt;/p&gt; &lt;!-- ... --&gt; &lt;/article&gt;
 				</code>
 			</pre>
 			<p>
@@ -48,16 +48,16 @@ export default function Page() {
 			<hr />
 			<h2>What to expect from here on out</h2>
 			<p>
-				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos nemo itaque culpa distinctio,
-				sed facilis voluptate non temporibus assumenda, fuga, quisquam consequatur ea obcaecati eveniet iure
-				laborum suscipit aliquid id?
+				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos nemo itaque culpa distinctio, sed
+				facilis voluptate non temporibus assumenda, fuga, quisquam consequatur ea obcaecati eveniet iure laborum
+				suscipit aliquid id?
 			</p>
 			<ol>
 				<li>We want everything to look good out of the box.</li>
 				<li>Really just the first reason, that's the whole point of the plugin.</li>
 				<li>
-					Here's a third pretend reason though a list with three items looks more realistic than a list
-					with two items.
+					Here's a third pretend reason though a list with three items looks more realistic than a list with
+					two items.
 				</li>
 			</ol>
 			<p>Now we're going to try out another header style.</p>
@@ -78,16 +78,16 @@ export default function Page() {
 			</p>
 			<h3>When a heading comes after a paragraph …</h3>
 			<p>
-				When a heading comes after a paragraph, we need a bit more space, like I already mentioned above.
-				Now let's see what a more complex list would look like.
+				When a heading comes after a paragraph, we need a bit more space, like I already mentioned above. Now
+				let's see what a more complex list would look like.
 			</p>
 			<p>
 				The most annoying thing about lists in Markdown is that
 				<code>&lt;li&gt;</code>
 				elements aren't given a child
 				<code>&lt;p&gt;</code>
-				tag unless there are multiple paragraphs in the list item. That means I have to worry about styling
-				that annoying situation too.
+				tag unless there are multiple paragraphs in the list item. That means I have to worry about styling that
+				annoying situation too.
 			</p>
 			<table>
 				<thead>
@@ -126,9 +126,8 @@ export default function Page() {
 				</tbody>
 			</table>
 			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias eveniet odit magni dicta fuga
-				assumenda, nam aperiam. Porro recusandae fuga, unde optio mollitia sint laborum ex beatae itaque,
-				assumenda soluta?
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias eveniet odit magni dicta fuga assumenda,
+				nam aperiam. Porro recusandae fuga, unde optio mollitia sint laborum ex beatae itaque, assumenda soluta?
 			</p>
 			<h4>
 				We haven't used an<code>h4</code>yet
