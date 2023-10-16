@@ -1,11 +1,5 @@
-import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-
-export const metadata: Metadata = {
-	title: 'Next.js + Tailwind CSS Kickstarter',
-	description: 'Basic template setup with Next.js + Tailwind CSS and some helpers.',
-};
 
 const links = [
 	{ href: 'https://nextjs.org/', label: 'Next.js' },
