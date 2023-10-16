@@ -1,7 +1,7 @@
 {
   "name": "nextjs-tailwindcss-kickstarter",
   "description": "Basic template setup with Next.js + Tailwind CSS and some helpers.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "homepage": "https://nextjs-tailwindcss-kickstarter.vercel.app/",
   "author": {
     "name": "Lars Wittenberg",
@@ -14,6 +14,7 @@
   },
   "scripts": {
     "dev": "next dev",
+    "dev-https": "next dev -p 3001 & npx local-ssl-proxy --source 3000 --target 3001",
     "build": "next build",
     "start": "next start",
     "clean": "npx rimraf .next",
