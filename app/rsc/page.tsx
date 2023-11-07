@@ -13,7 +13,7 @@ export default function Page() {
 	 * Since this is a server component, the below message
 	 * won't be displayed in the browser's dev console.
 	 */
-	const demomessage = "I'm a Server Component.";
+	const demomessage = 'I am a Server Component.';
 	// console.log(demomessage);
 
 	return (
