@@ -21,9 +21,7 @@
 
 ## todos
 
-* add a google font with `@next/font`
-* upgrade to Next.js `/app`-folder structure
-* check browser support
+[ ] add a google font with `@next/font`
 
 ## Useful Links
 
