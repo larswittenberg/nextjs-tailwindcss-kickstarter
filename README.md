@@ -21,7 +21,7 @@
 
 ## todos
 
-[ ] add a google font with `@next/font`
+[ ] …
 
 ## Useful Links
 
