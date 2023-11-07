@@ -32,8 +32,12 @@ export default function Page() {
 					Demo-Page with @tailwindcss/typography Plugin
 				</Link>
 				<br />
-				<Link className="text-center text-2xl" href="/mdx-page">
+				<Link className="text-center mb-8 text-2xl" href="/mdx-page">
 					Demo-Page written in Markdown
+				</Link>
+				<br />
+				<Link className="text-center text-2xl" href="/rsc">
+					Demo-Page for React Server Components
 				</Link>
 			</div>
 
