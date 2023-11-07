@@ -10,18 +10,16 @@ export const metadata: Metadata = {
 
 export default function Page() {
 	/*
-	* Since this is a server component, the below message
-	* won't be displayed in the browser's dev console.
-	*/
+	 * Since this is a server component, the below message
+	 * won't be displayed in the browser's dev console.
+	 */
 	const demomessage = "I'm a Server Component.";
 	// console.log(demomessage);
 
 	return (
 		<div className="prose prose-sm sm:prose lg:prose-lg mx-auto">
 			<h1 className="">Demo-Page for React Server Components</h1>
-			<p>
-				{demomessage}
-			</p>
+			<p>{demomessage}</p>
 
 			<hr />
 

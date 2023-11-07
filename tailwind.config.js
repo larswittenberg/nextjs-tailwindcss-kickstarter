@@ -4,7 +4,7 @@ module.exports = {
 	content: [
 		'./app/**/*.{js,ts,jsx,tsx,mdx}', // Note the addition of the `app` directory.
 		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
-		'./components/**/*.{js,jsx,ts,tsx,mdx}'
+		'./components/**/*.{js,jsx,ts,tsx,mdx}',
 	],
 	theme: {
 		extend: {

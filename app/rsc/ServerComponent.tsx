@@ -1,5 +1,5 @@
 async function loadPosts() {
-	await new Promise(resolve => {
+	await new Promise((resolve) => {
 		setTimeout(resolve, 3000);
 	});
 
@@ -15,10 +15,12 @@ export default async function ServerComponent({ items }) {
 			<h2>Server Component</h2>
 			{posts.slice(0, items).map((post) => (
 				<div key={post.id} className="post-listing">
-					<h3 className="post-title">{post.id}. {post.title}</h3>
+					<h3 className="post-title">
+						{post.id}. {post.title}
+					</h3>
 					<p className="post-body">{post.body}</p>
 				</div>
 			))}
 		</div>
 	);
-};
+}
