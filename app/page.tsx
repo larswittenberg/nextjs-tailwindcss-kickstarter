@@ -4,9 +4,11 @@ import Link from 'next/link';
 const links = [
 	{ href: 'https://nextjs.org/', label: 'Next.js' },
 	{ href: 'https://tailwindcss.com/', label: 'Tailwind CSS' },
-	{ href: 'https://purgecss.com/', label: 'PurgeCSS' },
+	{ href: 'https://postcss.org/', label: 'PostCSS' },
 	{ href: 'https://tailwindcss.com/docs/typography-plugin', label: '@tailwindcss/typography Plugin' },
 ];
+
+const features = ['Next.js 14', 'React 18', 'TailwindCSS 3.3', 'TypeScript', 'PostCSS', 'Autoprefixer', 'Prettier', 'ESLint', 'React Server Components', 'Next.js App Router', 'Google Fonts via next/font', 'Markdown width mdx', ];
 
 export default function Page() {
 	return (
@@ -14,12 +16,20 @@ export default function Page() {
 			<div className="py-20">
 				<h1 className="text-5xl text-center mb-12">Next.js + Tailwind CSS Kickstarter</h1>
 				<h2 className="text-center text-3xl mb-2">Tech Stack</h2>
-				<ul className="w-2/3 m-auto flex flex-wrap items-center justify-between">
+				<ul className="xl:w-2/3 m-auto flex flex-wrap items-center justify-between">
 					{links.map(({ href, label }) => (
-						<li key={`${href}${label}`}>
+						<li key={`${href}${label}`} className="basis-full lg:basis-auto text-center">
 							<a href={href} className="p-1">
 								{label}
 							</a>
+						</li>
+					))}
+				</ul>
+
+				<ul className="xl:w-2/3 m-auto flex flex-wrap items-center mt-8">
+					{features.map((item) => (
+						<li key={item} className="bg-gray-700 text-base m-1 px-1 rounded">
+							{item}
 						</li>
 					))}
 				</ul>
