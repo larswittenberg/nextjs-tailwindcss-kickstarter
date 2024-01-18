@@ -51,16 +51,17 @@ export default function Page() {
 			<hr className="my-16" />
 
 			<div className="flex flex-col items-center justify-center">
-				<Link className="mb-8 text-center text-2xl" href="/sub-page">
-					Demo-Page with @tailwindcss/typography Plugin
+				<h2 className="mb-8 text-center text-3xl">Demo-Pages</h2>
+				<Link className="mb-8 text-center text-2xl" href="/tailwind-typography">
+					Tailwind Typography Plugin
 				</Link>
 				<br />
 				<Link className="mb-8 text-center text-2xl" href="/mdx-page">
-					Demo-Page written in Markdown
+					Markdown Content
 				</Link>
 				<br />
 				<Link className="text-center text-2xl" href="/rsc">
-					Demo-Page for React Server Components
+					React Server Components
 				</Link>
 			</div>
 
