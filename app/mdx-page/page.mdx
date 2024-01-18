@@ -3,7 +3,7 @@ export const metadata = {
 };
 
 export const DemoComponent = () => (
-	<div className="not-prose text-2xl bg-red-600 p-2 mb-8 border-4 text-white border-solid border-black">
+	<div className="not-prose mb-8 border-4 border-solid border-black bg-red-600 p-2 text-2xl text-white">
 		This div is an exported component
 	</div>
 );
@@ -58,4 +58,4 @@ console.log(foo(5));
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum est quidem, consequatur ipsum temporibus eius vero vel placeat fugit iste dolores, eligendi voluptatem perspiciatis possimus ab architecto quam dolor ea.Distinctio nihil officia veniam! Nihil suscipit earum, laudantium nemo totam velit consectetur voluptas non incidunt officia. Dolores, ex asperiores maxime ad fuga minima libero, excepturi labore assumenda ipsam atque molestiae?
 
-export default ({ children }) => <div className="prose prose-sm sm:prose lg:prose-lg mx-auto">{children}</div>;
+export default ({ children }) => <div className="prose prose-sm mx-auto sm:prose lg:prose-lg">{children}</div>;

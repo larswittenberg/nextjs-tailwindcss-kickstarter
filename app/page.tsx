@@ -8,17 +8,30 @@ const links = [
 	{ href: 'https://tailwindcss.com/docs/typography-plugin', label: '@tailwindcss/typography Plugin' },
 ];
 
-const features = ['Next.js 14', 'React 18', 'TailwindCSS 3.3', 'TypeScript', 'PostCSS', 'Autoprefixer', 'Prettier', 'ESLint', 'React Server Components', 'Next.js App Router', 'Google Fonts via next/font', 'Markdown width mdx', ];
+const features = [
+	'Next.js 14',
+	'React 18',
+	'TailwindCSS 3.3',
+	'TypeScript',
+	'PostCSS',
+	'Autoprefixer',
+	'Prettier',
+	'ESLint',
+	'React Server Components',
+	'Next.js App Router',
+	'Google Fonts via next/font',
+	'Markdown width mdx',
+];
 
 export default function Page() {
 	return (
 		<>
 			<div className="py-20">
-				<h1 className="text-5xl text-center mb-12">Next.js + Tailwind CSS Kickstarter</h1>
-				<h2 className="text-center text-3xl mb-2">Tech Stack</h2>
-				<ul className="xl:w-2/3 m-auto flex flex-wrap items-center justify-between">
+				<h1 className="mb-12 text-center text-5xl">Next.js + Tailwind CSS Kickstarter</h1>
+				<h2 className="mb-2 text-center text-3xl">Tech Stack</h2>
+				<ul className="m-auto flex flex-wrap items-center justify-between xl:w-2/3">
 					{links.map(({ href, label }) => (
-						<li key={`${href}${label}`} className="basis-full lg:basis-auto text-center">
+						<li key={`${href}${label}`} className="basis-full text-center lg:basis-auto">
 							<a href={href} className="p-1">
 								{label}
 							</a>
@@ -26,9 +39,9 @@ export default function Page() {
 					))}
 				</ul>
 
-				<ul className="xl:w-2/3 m-auto flex flex-wrap items-center mt-8">
+				<ul className="m-auto mt-8 flex flex-wrap items-center xl:w-2/3">
 					{features.map((item) => (
-						<li key={item} className="bg-gray-700 text-base m-1 px-1 rounded">
+						<li key={item} className="m-1 rounded bg-gray-700 px-1 text-base">
 							{item}
 						</li>
 					))}
@@ -37,12 +50,12 @@ export default function Page() {
 
 			<hr className="my-16" />
 
-			<div className="flex flex-col justify-center items-center">
-				<Link className="text-center mb-8 text-2xl" href="/sub-page">
+			<div className="flex flex-col items-center justify-center">
+				<Link className="mb-8 text-center text-2xl" href="/sub-page">
 					Demo-Page with @tailwindcss/typography Plugin
 				</Link>
 				<br />
-				<Link className="text-center mb-8 text-2xl" href="/mdx-page">
+				<Link className="mb-8 text-center text-2xl" href="/mdx-page">
 					Demo-Page written in Markdown
 				</Link>
 				<br />
@@ -73,7 +86,7 @@ export default function Page() {
 
 			<hr className="my-16" />
 
-			<h2 className="text-center mb-8 text-2xl">Next.js Image Demo</h2>
+			<h2 className="mb-8 text-center text-2xl">Next.js Image Demo</h2>
 			<figure>
 				<Image
 					src="/images/unsplash.jpg"

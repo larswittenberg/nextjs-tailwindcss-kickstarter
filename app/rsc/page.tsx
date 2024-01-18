@@ -17,7 +17,7 @@ export default function Page() {
 	// console.log(demomessage);
 
 	return (
-		<div className="prose prose-sm sm:prose lg:prose-lg mx-auto">
+		<div className="prose prose-sm mx-auto sm:prose lg:prose-lg">
 			<h1 className="">Demo-Page for React Server Components</h1>
 			<p>{demomessage}</p>
 

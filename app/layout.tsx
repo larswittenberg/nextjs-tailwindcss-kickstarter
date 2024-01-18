@@ -31,7 +31,7 @@ export default function RootLayout({
 		<html lang="en" className={roboto.className}>
 			<body>
 				<Header />
-				<main className="lg:w-2/3 mx-4 lg:mx-auto">{children}</main>
+				<main className="mx-4 lg:mx-auto lg:w-2/3">{children}</main>
 				<Footer />
 			</body>
 		</html>

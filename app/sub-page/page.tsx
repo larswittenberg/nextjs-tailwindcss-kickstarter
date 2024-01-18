@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
 	return (
-		<div className="prose prose-sm sm:prose lg:prose-lg mx-auto">
+		<div className="prose prose-sm mx-auto sm:prose lg:prose-lg">
 			<h1 className="">Demo-Page with @tailwindcss-typography Plugin</h1>
 			<p className="lead">
 				Until now, trying to style an article, document, or blog post with Tailwind has been a tedious task that
