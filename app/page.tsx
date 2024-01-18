@@ -10,8 +10,8 @@ const links = [
 
 const features = [
 	'Next.js 14',
-	'React 18',
-	'TailwindCSS 3.3',
+	'React 18.2',
+	'TailwindCSS 3.4',
 	'TypeScript',
 	'PostCSS',
 	'Autoprefixer',
