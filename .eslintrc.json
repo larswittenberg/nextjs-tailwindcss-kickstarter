@@ -6,7 +6,7 @@
 	"extends": ["next/core-web-vitals", "eslint:recommended", "prettier"],
 	"settings": {
 		"next": {
-			"rootDir": "nextjs/"
+			"rootDir": "./src/"
 		}
 	},
 	"overrides": [],
