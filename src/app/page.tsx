@@ -8,7 +8,7 @@ const links = [
 ];
 
 const features = [
-	'Next.js 14',
+	'Next.js 14.1',
 	'React 18.2',
 	'TailwindCSS 3.4',
 	'TypeScript',
