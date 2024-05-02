@@ -24,12 +24,14 @@
     "export": "npx rimraf .next && next build && next export"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "^0.5.4",
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
     "@next/mdx": "^14.2.3",
     "@tailwindcss/typography": "^0.5.13",
     "autoprefixer": "^10.4.19",
     "classnames": "^2.5.1",
+    "negotiator": "^0.6.3",
     "next": "^14.2.3",
     "postcss": "^8.4.38",
     "react": "^18.3.1",
@@ -40,6 +42,7 @@
     "@fullhuman/postcss-purgecss": "^6.0.0",
     "@next/eslint-plugin-next": "^14.2.3",
     "@types/mdx": "^2.0.13",
+    "@types/negotiator": "^0.6.3",
     "@types/node": "20.12.8",
     "@types/react": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "^7.8.0",

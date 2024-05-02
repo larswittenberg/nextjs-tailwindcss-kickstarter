@@ -1,0 +1,15 @@
+{
+	"header": {
+		"projectTitle": "Project Website"
+	},
+	"indexPage": {
+		"techStackHeadline": "Tech Stack",
+		"demoHeadline": "Demo-Pages"
+	},
+	"typographyPage": {
+		"headline": "Demo-Page with @tailwindcss-typography Plugin"
+	},
+	"mdxPage": {
+		"headline": "This is a MDX page - written in Markdown"
+	}
+}

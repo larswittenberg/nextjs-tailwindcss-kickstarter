@@ -1,8 +1,8 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
-import '../styles/main.css';
-
+import { i18n, type Locale } from '@/src/i18n-config';
+import '../../styles/main.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -20,17 +20,16 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RootLayout({
-	// Layouts must accept a children prop.
-	// This will be populated with nested layouts or pages
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+export async function generateStaticParams() {
+	return i18n.locales.map((locale) => ({ lang: locale }));
+}
+
+export default async function RootLayout({ children, params }: { children: React.ReactNode; params: { lang: Locale } }) {
+
 	return (
-		<html lang="en" className={roboto.className}>
+		<html lang={params.lang} className={roboto.className}>
 			<body>
-				<Header />
+				<Header lang={params.lang} />
 				<main className="mx-4 lg:mx-auto lg:w-2/3">{children}</main>
 				<Footer />
 			</body>

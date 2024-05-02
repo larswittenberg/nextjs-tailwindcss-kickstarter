@@ -1,13 +1,17 @@
 import type { Metadata } from 'next';
+import { getDictionary } from '@/src/get-dictionary';
+import { Locale } from '@/src/i18n-config';
 
 export const metadata: Metadata = {
 	title: 'TailwindCSS Typography Plugin | Next.js + Tailwind CSS Kickstarter',
 };
 
-export default function Page() {
+export default async function Page({ params: { lang } }: { params: { lang: Locale } }) {
+	const dictionary = await getDictionary(lang);
+
 	return (
 		<div className="prose prose-sm mx-auto sm:prose lg:prose-lg">
-			<h1 className="">Demo-Page with @tailwindcss-typography Plugin</h1>
+			<h1 className="">{dictionary['typographyPage'].headline}</h1>
 			<p className="lead">
 				Until now, trying to style an article, document, or blog post with Tailwind has been a tedious task that
 				required a keen eye for typography and a lot of complex custom CSS.

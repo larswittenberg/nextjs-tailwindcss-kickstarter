@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { getDictionary } from '@/src/get-dictionary';
+import { Locale } from '@/src/i18n-config';
 
 const links = [
 	{ href: 'https://nextjs.org/', label: 'Next.js' },
@@ -18,40 +20,51 @@ const features = [
 	'ESLint',
 	'React Server Components',
 	'Next.js App Router',
+	'i18n Support',
 	'Google Fonts via next/font',
 	'Markdown width mdx',
 ];
 
 const demoPages = [
 	{
-		href: '/tailwind-typography',
+		href: 'tailwind-typography',
 		label: 'Tailwind Typography Plugin',
 	},
 	{
-		href: '/mdx-page',
+		href: 'mdx-page',
 		label: 'Markdown Content',
 	},
 	{
-		href: '/rsc',
+		href: 'rsc',
 		label: 'React Server Components',
 	},
 	{
-		href: '/next-image',
+		href: 'next-image',
 		label: 'Next Image',
 	},
 	{
-		href: '/tailwind-jit',
+		href: 'tailwind-jit',
 		label: 'Tailwind JIT',
 	},
 ];
 
-export default function Page() {
+export default async function IndexPage({ params: { lang } }: { params: { lang: Locale } }) {
+	const dictionary = await getDictionary(lang);
+
 	return (
 		<>
 			<div className="py-20">
-				<h1 className="mb-12 text-center text-5xl">Next.js + Tailwind CSS Kickstarter</h1>
+				<h1 className="mb-6 text-center text-5xl">Next.js + TailwindCSS Kickstarter</h1>
+				<p className="mb-12 text-center text-xl">
+					<a
+						href="https://github.com/larswittenberg/nextjs-tailwindcss-kickstarter"
+						className="dark:text-gray-300"
+					>
+						GitHub
+					</a>
+				</p>
 
-				<h2 className="mb-2 text-center text-3xl">Tech Stack</h2>
+				<h2 className="mb-2 text-center text-3xl">{dictionary['indexPage'].techStackHeadline}</h2>
 				<ul className="m-auto mb-8 flex flex-wrap items-center justify-between xl:w-2/3">
 					{links.map(({ href, label }) => (
 						<li key={`${href}${label}`} className="basis-full text-center lg:basis-auto">
@@ -69,11 +82,11 @@ export default function Page() {
 					))}
 				</ul>
 
-				<h2 className="mb-8 text-center text-3xl">Demo-Pages</h2>
+				<h2 className="mb-8 text-center text-3xl">{dictionary['indexPage'].demoHeadline}</h2>
 				<ul className="m-auto xl:w-2/3">
 					{demoPages.map((item, key) => (
 						<li key={key} className="mb-6 text-center">
-							<Link className="text-2xl" href={item.href}>
+							<Link className="text-2xl" href={`${lang}/${item.href}`}>
 								{item.label}
 							</Link>
 						</li>
