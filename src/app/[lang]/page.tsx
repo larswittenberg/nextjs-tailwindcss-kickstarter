@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { getDictionary } from '@/src/get-dictionary';
 import { Locale } from '@/src/i18n-config';
-import customAlertDataFromJson from './custom-alert.json';
+import customAlertDataFromJson from '../../custom-alert.json';
 
 const links = [
 	{ href: 'https://nextjs.org/', label: 'Next.js' },
