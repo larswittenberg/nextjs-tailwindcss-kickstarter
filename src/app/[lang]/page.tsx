@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getDictionary } from '@/src/get-dictionary';
 import { Locale } from '@/src/i18n-config';
+import customAlertDataFromJson from './custom-alert.json';
 
 const links = [
 	{ href: 'https://nextjs.org/', label: 'Next.js' },
@@ -50,11 +51,31 @@ const demoPages = [
 
 export default async function IndexPage({ params: { lang } }: { params: { lang: Locale } }) {
 	const dictionary = await getDictionary(lang);
+	const dataFromJson = customAlertDataFromJson.data.filter(
+		(item) => item.published === true && item.language === lang,
+	)[0];
 
 	return (
 		<>
 			<div className="py-20">
 				<h1 className="mb-6 text-center text-5xl">Next.js + TailwindCSS Kickstarter</h1>
+
+				{dataFromJson && dataFromJson.title && (
+					<div className="my-12 rounded-xl bg-green-200 p-6 text-black">
+						{dataFromJson.date && <p className="">{dataFromJson.date}</p>}
+						{dataFromJson.title && <h2 className="mb-2 text-2xl">{dataFromJson.title}</h2>}
+						{dataFromJson.message && <p className="">{dataFromJson.message}</p>}
+						{dataFromJson.link && dataFromJson.linktext && <a
+							href={dataFromJson.link}
+							className="mt-2 block underline"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{dataFromJson.linktext}
+						</a>}
+					</div>
+				)}
+
 				<p className="mb-12 text-center text-xl">
 					<a
 						href="https://github.com/larswittenberg/nextjs-tailwindcss-kickstarter"

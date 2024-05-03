@@ -1,0 +1,22 @@
+{
+	"data": [
+		{
+			"published": false,
+			"language": "en",
+			"date": "2024-05-01",
+			"title": "Custom Alert Headline",
+			"message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque amet, veritatis numquam consectetur voluptas debitis porro aut dolorem, quos quia voluptates eaque saepe atque reprehenderit, nobis praesentium eveniet recusandae unde.",
+			"link": "https://www.google.com",
+			"linktext": "Read More"
+		},
+		{
+			"published": false,
+			"language": "de",
+			"date": "2024-05-01",
+			"title": "Deutsche Überschrift der Meldung",
+			"message": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+			"link": "https://www.google.de",
+			"linktext": "Weiterlesen"
+		}
+	]
+}
