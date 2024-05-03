@@ -14,17 +14,17 @@
 		"jsx": "preserve",
 		"plugins": [
 			{
-				"name": "next",
-			},
+				"name": "next"
+			}
 		],
 		// Absolute Imports and Module Path Aliases
 		// https://nextjs.org/docs/app/building-your-application/configuring/absolute-imports-and-module-aliases
 		"paths": {
 			"@/components/*": ["./src/components/*"],
-			"@/src/*": ["./src/*"],
+			"@/src/*": ["./src/*"]
 		},
-		"strictNullChecks": true,
+		"strictNullChecks": true
 	},
 	"include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
-	"exclude": ["node_modules"],
+	"exclude": ["node_modules"]
 }
