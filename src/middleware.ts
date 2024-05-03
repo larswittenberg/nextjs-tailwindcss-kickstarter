@@ -30,6 +30,7 @@ export function middleware(request: NextRequest) {
 	if (
 		[
 			'/favicon.svg',
+			'/images/unsplash.jpg',
 			// '/manifest.json',
 			// Your other files in `public`
 		].includes(pathname)
