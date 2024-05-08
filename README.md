@@ -2,26 +2,6 @@
 
 [Visit Demo-Website](https://nextjs-tailwindcss-kickstarter.vercel.app/)
 
-## Tech Stack
-
-* [Next.js](https://nextjs.org/)
-* [TailwindCSS](https://tailwindcss.com/)
-
-## Features
-
-* Next.js 14
-* React 18.2
-* TailwindCSS 3.4
-* TypeScript
-* PostCSS
-* Autoprefixer
-* Prettier
-* ESLint
-* React Server Components
-* Next.js App Router
-* Google Fonts via next/font
-* Markdown width mdx
-
 ## Development
 
 `yarn dev` Starts the development server.
