@@ -18,7 +18,6 @@
 
 ## todos
 
-* [ ] custom 404 page
 * [ ] Intercepting Routes demo page
 * [ ] Parallel Routes demo page
 
