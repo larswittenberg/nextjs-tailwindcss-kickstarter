@@ -21,7 +21,8 @@
 		// https://nextjs.org/docs/app/building-your-application/configuring/absolute-imports-and-module-aliases
 		"paths": {
 			"@/components/*": ["./src/components/*"],
-			"@/src/*": ["./src/*"]
+			"@/src/*": ["./src/*"],
+			"@/scss/*": ["./src/scss/*"]
 		},
 		"strictNullChecks": true
 	},

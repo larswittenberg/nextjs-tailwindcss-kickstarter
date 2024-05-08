@@ -14,6 +14,7 @@ const features = [
 	'Next.js 14.2',
 	'React 18.3',
 	'TailwindCSS 3.4',
+	'SCSS Support',
 	'TypeScript',
 	'PostCSS',
 	'Autoprefixer',
@@ -42,6 +43,10 @@ const demoPages = [
 	{
 		href: 'next-image',
 		label: 'Next Image',
+	},
+	{
+		href: 'scss-page',
+		label: 'SCSS Demo-Page',
 	},
 	{
 		href: 'tailwind-jit',

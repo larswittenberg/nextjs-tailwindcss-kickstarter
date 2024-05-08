@@ -1,0 +1,9 @@
+/*
+ * https://nextjs.org/docs/app/building-your-application/styling/sass#sass-variables
+ */
+
+$primary-color: #64ff00;
+
+:export {
+	primaryColor: $primary-color;
+}
