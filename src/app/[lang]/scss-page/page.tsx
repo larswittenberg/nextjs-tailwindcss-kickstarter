@@ -15,9 +15,7 @@ export default async function Page({ params: { lang } }: { params: { lang: Local
 		<div className="scss--pagewrapper">
 			<h1 className="scss--headline">
 				{dictionary['scssPage'].headline}
-				<span style={{ color: variables.primaryColor }}>
-					{dictionary['scssPage'].subtitle}
-				</span>
+				<span style={{ color: variables.primaryColor }}>{dictionary['scssPage'].subtitle}</span>
 			</h1>
 		</div>
 	);

@@ -70,14 +70,16 @@ export default async function IndexPage({ params: { lang } }: { params: { lang: 
 						{dataFromJson.date && <p className="">{dataFromJson.date}</p>}
 						{dataFromJson.title && <h2 className="mb-2 text-2xl">{dataFromJson.title}</h2>}
 						{dataFromJson.message && <p className="">{dataFromJson.message}</p>}
-						{dataFromJson.link && dataFromJson.linktext && <a
-							href={dataFromJson.link}
-							className="mt-2 block underline"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							{dataFromJson.linktext}
-						</a>}
+						{dataFromJson.link && dataFromJson.linktext && (
+							<a
+								href={dataFromJson.link}
+								className="mt-2 block underline"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{dataFromJson.linktext}
+							</a>
+						)}
 					</div>
 				)}
 

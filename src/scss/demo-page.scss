@@ -2,9 +2,9 @@ $secondary-color: #ff7b72;
 
 @mixin border-radius($radius) {
 	-webkit-border-radius: $radius;
-	   -moz-border-radius: $radius;
-		-ms-border-radius: $radius;
-			border-radius: $radius;
+	-moz-border-radius: $radius;
+	-ms-border-radius: $radius;
+	border-radius: $radius;
 }
 
 .scss--pagewrapper {
@@ -12,7 +12,6 @@ $secondary-color: #ff7b72;
 	border: 2px solid #eee;
 	padding: 20px;
 }
-
 
 .scss--headline {
 	font-size: 40px;
