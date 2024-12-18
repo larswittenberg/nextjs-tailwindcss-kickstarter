@@ -54,13 +54,19 @@ const demoPages = [
 	},
 ];
 
-export default async function IndexPage({ params: { lang } }: { params: { lang: Locale } }) {
-	const dictionary = await getDictionary(lang);
-	const dataFromJson = customAlertDataFromJson.data.filter(
+export default async function IndexPage(props: { params: Promise<{ lang: Locale }> }) {
+    const params = await props.params;
+
+    const {
+        lang
+    } = params;
+
+    const dictionary = await getDictionary(lang);
+    const dataFromJson = customAlertDataFromJson.data.filter(
 		(item) => item.published === true && item.language === lang,
 	)[0];
 
-	return (
+    return (
 		<>
 			<div className="py-20">
 				<h1 className="mb-6 text-center text-5xl">Next.js + TailwindCSS Kickstarter</h1>

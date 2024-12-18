@@ -6,10 +6,16 @@ export const metadata: Metadata = {
 	title: 'TailwindCSS Typography Plugin | Next.js + Tailwind CSS Kickstarter',
 };
 
-export default async function Page({ params: { lang } }: { params: { lang: Locale } }) {
-	const dictionary = await getDictionary(lang);
+export default async function Page(props: { params: Promise<{ lang: Locale }> }) {
+    const params = await props.params;
 
-	return (
+    const {
+        lang
+    } = params;
+
+    const dictionary = await getDictionary(lang);
+
+    return (
 		<div className="prose prose-sm mx-auto sm:prose lg:prose-lg">
 			<h1 className="">{dictionary['typographyPage'].headline}</h1>
 			<p className="lead">
