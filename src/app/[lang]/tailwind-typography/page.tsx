@@ -7,15 +7,13 @@ export const metadata: Metadata = {
 };
 
 export default async function Page(props: { params: Promise<{ lang: Locale }> }) {
-    const params = await props.params;
+	const params = await props.params;
 
-    const {
-        lang
-    } = params;
+	const { lang } = params;
 
-    const dictionary = await getDictionary(lang);
+	const dictionary = await getDictionary(lang);
 
-    return (
+	return (
 		<div className="prose prose-sm mx-auto sm:prose lg:prose-lg">
 			<h1 className="">{dictionary['typographyPage'].headline}</h1>
 			<p className="lead">

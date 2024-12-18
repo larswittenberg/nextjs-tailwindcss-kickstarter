@@ -9,15 +9,13 @@ export const metadata: Metadata = {
 };
 
 export default async function Page(props: { params: Promise<{ lang: Locale }> }) {
-    const params = await props.params;
+	const params = await props.params;
 
-    const {
-        lang
-    } = params;
+	const { lang } = params;
 
-    const dictionary = await getDictionary(lang);
+	const dictionary = await getDictionary(lang);
 
-    return (
+	return (
 		<div className="scss--pagewrapper">
 			<h1 className="scss--headline">
 				{dictionary['scssPage'].headline}
