@@ -13,7 +13,7 @@ const links = [
 const features = [
 	'Next.js 15.1',
 	'React 19.0',
-	'TailwindCSS 3.4',
+	'TailwindCSS 4',
 	'SCSS Support',
 	'TypeScript',
 	'PostCSS',
@@ -47,10 +47,6 @@ const demoPages = [
 	{
 		href: 'scss-page',
 		label: 'SCSS Demo-Page',
-	},
-	{
-		href: 'tailwind-jit',
-		label: 'Tailwind JIT',
 	},
 ];
 
