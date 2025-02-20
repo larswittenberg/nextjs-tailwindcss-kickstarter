@@ -4,6 +4,7 @@
 
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
+
 @theme {
 	--color-orange: #ef7c17;
 	--color-darkblue: #1c2532;
@@ -28,10 +29,6 @@ a {
 	&:hover {
 		text-decoration-thickness: 4px;
 	}
-}
-
-p {
-	@apply mb-2;
 }
 
 .prose h1,
