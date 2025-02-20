@@ -8,7 +8,7 @@ export default function ClientComponent({ upvotes }) {
 		<>
 			<h2>Client Component</h2>
 			<button
-				className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+				className="rounded-sm bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
 				onClick={() => setUpvoteCount(upvoteCount + 1)}
 			>
 				{upvoteCount} Upvotes

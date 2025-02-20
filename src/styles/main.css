@@ -2,12 +2,15 @@
 /* @import "helpers/debugging.css";  */
 /* @import "helpers/htmllinting.css"; */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+@theme {
+	--color-orange: #ef7c17;
+	--color-darkblue: #1c2532;
+}
 
 ::selection {
-	background-color: theme("colors.orange");
+	background-color: var(--color-orange);
 	color: #fff;
 }
 
@@ -18,7 +21,7 @@ body {
 a {
 	@apply transition-all;
 	text-decoration-line: underline;
-	text-decoration-color: theme("colors.orange");
+	text-decoration-color: var(--color-orange);
 	text-decoration-thickness: 2px;
 	text-underline-offset: 4px;
 

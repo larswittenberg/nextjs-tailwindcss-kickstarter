@@ -108,7 +108,7 @@ export default async function IndexPage(props: { params: Promise<{ lang: Locale 
 				</ul>
 				<ul className="m-auto mb-24 flex flex-wrap items-center xl:w-2/3">
 					{features.map((item) => (
-						<li key={item} className="m-1 rounded bg-gray-700 px-1 text-base">
+						<li key={item} className="m-1 rounded-sm bg-gray-700 px-1 text-base">
 							{item}
 						</li>
 					))}
