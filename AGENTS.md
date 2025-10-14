@@ -5,6 +5,7 @@ This Next.js 15 app uses `src/app/[lang]/` for route segments per locale; create
 
 ## Build, Test, and Development Commands
 Run `yarn dev` for the local dev server on port 3000, or `yarn dev-https` when you need an HTTPS tunnel. Use `yarn build` to create an optimized production bundle and `yarn start` to serve it. `yarn lint` runs the ESLint configuration and should be clean before committing, while `yarn format` applies Prettier with the Tailwind plugin. `yarn export` produces a static export after wiping `.next/`.
+Use `yarn shadcn` (for example `yarn shadcn add button`) to scaffold UI primitives; the generator writes into `src/components/ui/`, so review and localize output before committing.
 
 ## Coding Style & Naming Conventions
 The project targets TypeScript with React Server Components, so keep component files as `.tsx` and export functions with PascalCase names. Leverage Tailwind utility classes; the Prettier plugin will sort them automatically—avoid manual reordering. Stick to Prettier defaults (two-space indent, single quotes via ESLint config) and let `src/styles/helpers/` SCSS mixins drive any custom CSS. Keep dictionaries lowercase (for example, `en.json`, `de.json`) and mirror locale keys in `i18n-config.ts`.
