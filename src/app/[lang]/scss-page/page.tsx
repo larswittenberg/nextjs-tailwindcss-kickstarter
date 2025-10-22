@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getDictionary } from '@/src/get-dictionary';
 import { Locale } from '@/src/i18n-config';
-import variables from '@/scss/variables.module.scss';
+// import variables from '@/scss/variables.module.scss';
 import '@/scss/demo-page.scss';
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export default async function Page(props: { params: Promise<{ lang: Locale }> })
 		<div className="scss--pagewrapper">
 			<h1 className="scss--headline">
 				{dictionary['scssPage'].headline}
-				<span style={{ color: variables.primaryColor }}>{dictionary['scssPage'].subtitle}</span>
+				{/*<span style={{ color: variables.primaryColor }}>{dictionary['scssPage'].subtitle}</span>*/}
 			</h1>
 		</div>
 	);
