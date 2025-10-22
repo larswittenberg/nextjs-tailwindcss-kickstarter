@@ -11,7 +11,7 @@ const links = [
 ];
 
 const features = [
-        'Next.js 15.5',
+        'Next.js 16.0',
         'React 19.2',
         'TailwindCSS 4.1',
 	'SCSS Support',
