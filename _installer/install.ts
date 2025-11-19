@@ -64,8 +64,23 @@ async function runInstaller() {
   // 3. Install Dependencies
   await installDependencies();
 
-  // 4. Cleanup
-  await cleanupInstaller();
+  // 4. Ask about cleanup
+  const { shouldCleanup } = await inquirer.prompt([
+    {
+        type: 'confirm',
+        name: 'shouldCleanup',
+        message: 'Soll das Installer-Skript nach der Ausführung gelöscht werden? (Empfohlen)',
+        default: true,
+    },
+  ]);
+
+  // 5. Cleanup (if requested)
+  if (shouldCleanup) {
+    await cleanupInstaller();
+    await removeSetupScript();
+  } else {
+    console.log('\nInstaller-Skript wird beibehalten. Du kannst es später erneut ausführen.');
+  }
 
   console.log('🎉 Setup abgeschlossen! Viel Spaß beim Codieren!');
 }
@@ -87,11 +102,6 @@ async function updatePackageJson(deselectedModules: Module[]) {
         delete packageJson.devDependencies[devDep];
       }
     }
-  }
-
-  // Remove setup script
-  if (packageJson.scripts?.setup) {
-    delete packageJson.scripts.setup;
   }
 
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
@@ -184,6 +194,16 @@ async function cleanupInstaller() {
   console.log('Installationsdateien werden bereinigt...');
   fs.rmSync(installerDir, { recursive: true, force: true });
   console.log('Installationsverzeichnis entfernt.');
+}
+
+async function removeSetupScript() {
+  console.log('setup-Skript aus package.json wird entfernt...');
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+  if (packageJson.scripts?.setup) {
+    delete packageJson.scripts.setup;
+  }
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
+  console.log('setup-Skript entfernt.');
 }
 
 // --- Run Script ---
