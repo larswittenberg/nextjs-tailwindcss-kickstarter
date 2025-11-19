@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getDictionary } from '@/src/get-dictionary';
 import { Locale } from '@/src/i18n-config';
 
@@ -38,10 +39,6 @@ const demoPages = [
 	{
 		href: 'rsc',
 		label: 'React Server Components',
-	},
-	{
-		href: 'next-image',
-		label: 'Next Image',
 	},
 	{
 		href: 'scss-page',
@@ -98,6 +95,30 @@ export default async function IndexPage(props: { params: Promise<{ lang: Locale 
 						</li>
 					))}
 				</ul>
+
+				<h2 className="mt-24 mb-8 text-center text-3xl">Next.js Image Demo</h2>
+				<figure>
+					<Image
+						src="/images/unsplash.jpg"
+						width={1920}
+						height={1280}
+						alt="Alpe di Siusi, Italia from Pietro De Grandi from Unsplash"
+						priority
+					/>
+					<figcaption>
+						<span>
+							Alpe di Siusi, Italia. Photo by{' '}
+							<a href="https://unsplash.com/@peter_mc_greats?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+								Pietro De Grandi
+							</a>{' '}
+							on{' '}
+							<a href="https://unsplash.com/images/nature?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+								Unsplash
+							</a>
+						</span>
+					</figcaption>
+				</figure>
+
 			</div>
 		</>
 	);
