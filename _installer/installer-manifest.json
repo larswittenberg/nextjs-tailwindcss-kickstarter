@@ -17,6 +17,29 @@
       "nextConfigModifications": {
         "removeIfDeselected": "sassOptions"
       }
+    },
+    {
+      "id": "mdx",
+      "name": "MDX Support (Markdown Pages)",
+      "description": "Ermöglicht das Schreiben von React-Komponenten in Markdown (.mdx).",
+      "type": "features",
+      "selected": true,
+      "dependencies": {
+        "@mdx-js/loader": "^3.1.1",
+        "@mdx-js/react": "^3.1.1",
+        "@next/mdx": "16.0.3"
+      },
+      "devDependencies": {
+        "@types/mdx": "^2.0.13"
+      },
+      "filesToDeleteIfDeselected": [
+        "mdx-components.tsx",
+        "src/app/[lang]/mdx-page"
+      ],
+      "nextConfigModifications": {
+        "removeWrapper": "withMDX",
+        "removeFromPageExtensions": "mdx"
+      }
     }
   ]
 }

@@ -4,26 +4,20 @@ import inquirer from 'inquirer';
 import { fileURLToPath } from 'url';
 import { exec } from 'child_process';
 
-// __dirname equivalent for ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const projectRoot = path.resolve(__dirname, '../');
-const installerDir = path.resolve(projectRoot, '_installer');
-const manifestPath = path.resolve(installerDir, 'installer-manifest.json');
-const packageJsonPath = path.resolve(projectRoot, 'package.json');
-const nextConfigPath = path.resolve(projectRoot, 'next.config.js');
-
+// --- Types ---
 interface Module {
   id: string;
   name: string;
   description: string;
   type: string;
   selected: boolean;
-  devDependencies: Record<string, string>;
-  filesToDeleteIfDeselected: string[];
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+  filesToDeleteIfDeselected?: string[];
   nextConfigModifications?: {
-    removeIfDeselected?: string; // Key in nextConfig to remove
+    removeIfDeselected?: string;
+    removeWrapper?: string;
+    removeFromPageExtensions?: string;
   };
 }
 
@@ -32,61 +26,63 @@ interface Manifest {
   modules: Module[];
 }
 
+// --- Constants ---
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const projectRoot = path.resolve(__dirname, '../');
+const installerDir = path.resolve(projectRoot, '_installer');
+const manifestPath = path.resolve(installerDir, 'installer-manifest.json');
+const packageJsonPath = path.resolve(projectRoot, 'package.json');
+const nextConfigPath = path.resolve(projectRoot, 'next.config.js');
+
+// --- Main Installer Logic ---
 async function runInstaller() {
   console.log('🚀 Next.js Kickstarter Installer wird gestartet...');
 
-  let manifest: Manifest;
-  try {
-    manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
-  } catch (error) {
-    console.error('Fehler beim Lesen von installer-manifest.json:', error);
-    process.exit(1);
-  }
+  const manifest: Manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
 
-  const scssModule = manifest.modules.find(m => m.id === 'scss');
-  if (!scssModule) {
-    console.error('SCSS-Modul nicht im Manifest gefunden.');
-    process.exit(1);
-  }
+  // 1. Interactive Prompts
+  const prompts = manifest.modules.map(mod => ({
+    type: 'confirm',
+    name: mod.id,
+    message: `Möchtest du ${mod.name} nutzen? (${mod.description})`,
+    default: mod.selected,
+  }));
+  const answers = await inquirer.prompt(prompts);
 
-  // --- 1. Interactive Prompt ---
-  const answers = await inquirer.prompt([
-    {
-      type: 'confirm',
-      name: 'enableScss',
-      message: `Möchtest du ${scssModule.name} (${scssModule.description}) nutzen?`,
-      default: scssModule.selected,
-    },
-  ]);
+  const selectedModules = manifest.modules.filter(mod => answers[mod.id]);
+  const deselectedModules = manifest.modules.filter(mod => !answers[mod.id]);
 
-  const enableScss = answers.enableScss;
-  console.log(`SCSS-Unterstützung ${enableScss ? 'aktiviert' : 'deaktiviert'}.`);
+  console.log('\nAusgewählte Module:', selectedModules.map(m => m.name).join(', ') || 'Keine');
+  console.log('Abgewählte Module:', deselectedModules.map(m => m.name).join(', ') || 'Keine', '\n');
 
-  // --- 2. Apply Changes ---
-  await updatePackageJson(enableScss, scssModule);
-  await updateNextConfig(enableScss, scssModule);
-  await handleScssFiles(enableScss, scssModule);
+  // 2. Apply Changes
+  await updatePackageJson(deselectedModules);
+  await updateNextConfig(deselectedModules);
+  await handleFilesToDelete(deselectedModules);
 
-  // --- 3. Install Dependencies ---
+  // 3. Install Dependencies
   await installDependencies();
 
-  // --- 4. Cleanup ---
+  // 4. Cleanup
   await cleanupInstaller();
 
   console.log('🎉 Setup abgeschlossen! Viel Spaß beim Codieren!');
 }
 
-async function updatePackageJson(enableScss: boolean, module: Module) {
+// --- File Modification Functions ---
+
+async function updatePackageJson(deselectedModules: Module[]) {
   console.log('package.json wird aktualisiert...');
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
 
-  if (enableScss) {
-    // Ensure sass is in devDependencies
-    if (!packageJson.devDependencies) packageJson.devDependencies = {};
-    Object.assign(packageJson.devDependencies, module.devDependencies);
-  } else {
-    // Remove sass from devDependencies
-    if (packageJson.devDependencies && module.devDependencies) {
+  for (const module of deselectedModules) {
+    if (module.dependencies && packageJson.dependencies) {
+      for (const dep in module.dependencies) {
+        delete packageJson.dependencies[dep];
+      }
+    }
+    if (module.devDependencies && packageJson.devDependencies) {
       for (const devDep in module.devDependencies) {
         delete packageJson.devDependencies[devDep];
       }
@@ -94,7 +90,7 @@ async function updatePackageJson(enableScss: boolean, module: Module) {
   }
 
   // Remove setup script
-  if (packageJson.scripts && packageJson.scripts.setup) {
+  if (packageJson.scripts?.setup) {
     delete packageJson.scripts.setup;
   }
 
@@ -102,80 +98,87 @@ async function updatePackageJson(enableScss: boolean, module: Module) {
   console.log('package.json aktualisiert.');
 }
 
-async function updateNextConfig(enableScss: boolean, module: Module) {
+async function updateNextConfig(deselectedModules: Module[]) {
   console.log('next.config.js wird aktualisiert...');
-  let nextConfigContent = fs.readFileSync(nextConfigPath, 'utf-8');
+  let content = fs.readFileSync(nextConfigPath, 'utf-8');
 
-  if (module.nextConfigModifications?.removeIfDeselected === 'sassOptions') {
-    // Regex to find and remove sassOptions block, considering potential comments or surrounding code
-    // This regex looks for `sassOptions: { ... },` or `sassOptions: { ... }`
-    const removeRegex = /(\s*sassOptions:\s*\{[\s\S]*?\},?\s*)/m;
+  for (const module of deselectedModules) {
+    const mods = module.nextConfigModifications;
+    if (!mods) continue;
+
+    // Remove a simple key-value block (like sassOptions)
+    if (mods.removeIfDeselected) {
+      const regex = new RegExp(`\s*${mods.removeIfDeselected}:\s*\{[\s\S]*?\},?`, 'm');
+      content = content.replace(regex, '');
+      console.log(`- '${mods.removeIfDeselected}' aus next.config.js entfernt.`);
+    }
+
+    // Remove a page extension from the pageExtensions array
+    if (mods.removeFromPageExtensions) {
+      const regex = new RegExp(`'${mods.removeFromPageExtensions}',?\s*|\s*,'${mods.removeFromPageExtensions}'`, 'g');
+      content = content.replace(regex, '');
+      console.log(`- '${mods.removeFromPageExtensions}' aus 'pageExtensions' entfernt.`);
+    }
     
-    if (!enableScss && removeRegex.test(nextConfigContent)) {
-      nextConfigContent = nextConfigContent.replace(removeRegex, '');
-      console.log('sassOptions aus next.config.js entfernt.');
-    } else if (enableScss && !removeRegex.test(nextConfigContent)) {
-        // If SCSS is enabled, but sassOptions is missing, re-add it.
-        // This is a simple append for now. A more robust solution would be an AST transformation.
-        // Find the 'nextConfig' object and insert sassOptions inside it.
-        const nextConfigStart = nextConfigContent.indexOf('const nextConfig = {');
-        if (nextConfigStart !== -1) {
-            // Find the end of the reactStrictMode line to insert after it
-            const reactStrictModeLineEnd = nextConfigContent.indexOf('reactStrictMode: true,', nextConfigStart) + 'reactStrictMode: true,'.length;
-            if (reactStrictModeLineEnd !== -1) {
-                // Ensure correct indentation
-                const newSassOptions = `\n\tsassOptions: {\n\t\tincludePaths: [path.join(__dirname, 'src/scss')],\n\t},\n`;
-                nextConfigContent = nextConfigContent.substring(0, reactStrictModeLineEnd) + newSassOptions + nextConfigContent.substring(reactStrictModeLineEnd);
-                console.log('sassOptions zu next.config.js hinzugefügt.');
-            }
-        }
+    // Remove a wrapper function (like withMDX)
+    if (mods.removeWrapper) {
+      const wrapperConstRegex = new RegExp(`const\s+${mods.removeWrapper}\s*=\s*require\(.*\);?`, 'm');
+      content = content.replace(wrapperConstRegex, '');
+      
+      const moduleExportRegex = new RegExp(`module\.exports\s*=\s*${mods.removeWrapper}\((.*)\);`, 's');
+      content = content.replace(moduleExportRegex, 'module.exports = $1;');
+      console.log(`- Wrapper '${mods.removeWrapper}' aus next.config.js entfernt.`);
     }
   }
 
-  fs.writeFileSync(nextConfigPath, nextConfigContent);
+  fs.writeFileSync(nextConfigPath, content);
   console.log('next.config.js aktualisiert.');
 }
 
-async function handleScssFiles(enableScss: boolean, module: Module) {
-  if (!enableScss) {
-    console.log('SCSS-Dateien werden gelöscht...');
-    for (const filePath of module.filesToDeleteIfDeselected) {
-      const fullPath = path.resolve(projectRoot, filePath);
+async function handleFilesToDelete(deselectedModules: Module[]) {
+  console.log('Nicht benötigte Dateien und Ordner werden gelöscht...');
+  for (const module of deselectedModules) {
+    if (!module.filesToDeleteIfDeselected) continue;
+
+    for (const fileOrDirPath of module.filesToDeleteIfDeselected) {
+      const fullPath = path.resolve(projectRoot, fileOrDirPath);
       if (fs.existsSync(fullPath)) {
-        fs.unlinkSync(fullPath);
-        console.log(`Gelöscht: ${filePath}`);
+        try {
+          const stat = fs.statSync(fullPath);
+          if (stat.isDirectory()) {
+            fs.rmSync(fullPath, { recursive: true, force: true });
+            console.log(`- Verzeichnis gelöscht: ${fileOrDirPath}`);
+          } else {
+            fs.unlinkSync(fullPath);
+            console.log(`- Datei gelöscht: ${fileOrDirPath}`);
+          }
+        } catch (e) {
+            console.error(`Fehler beim Löschen von ${fullPath}:`, e)
+        }
       }
-    }
-    const scssDirPath = path.resolve(projectRoot, 'src/scss');
-    // Check if directory is empty before removing
-    if (fs.existsSync(scssDirPath) && fs.readdirSync(scssDirPath).length === 0) {
-      fs.rmSync(scssDirPath, { recursive: true, force: true }); // Use rmSync for directory
-      console.log(`Leeres Verzeichnis gelöscht: src/scss`);
-    } else if (fs.existsSync(scssDirPath)) {
-        console.warn(`Das Verzeichnis src/scss ist nach dem Löschen von Dateien nicht leer. Bitte manuell überprüfen.`);
     }
   }
 }
 
+// --- Execution Functions ---
+
 async function installDependencies() {
-    console.log('Paketmanager wird ausgeführt, um Abhängigkeiten zu installieren/entfernen...');
-    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-    const packageManager = packageJson.packageManager?.split('@')[0] || 'npm';
+  console.log('Paketmanager wird ausgeführt, um Abhängigkeiten zu installieren/entfernen...');
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+  const packageManager = packageJson.packageManager?.split('@')[0] || 'npm';
 
-    return new Promise<void>((resolve, reject) => {
-        exec(`${packageManager} install`, { cwd: projectRoot }, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Fehler beim Ausführen von '${packageManager} install': ${error.message}`);
-                console.error(stderr);
-                return reject(error);
-            }
-            console.log(stdout);
-            console.log(`Abhängigkeiten erfolgreich aktualisiert mit '${packageManager}'.`);
-            resolve();
-        });
+  return new Promise<void>((resolve, reject) => {
+    exec(`${packageManager} install`, { cwd: projectRoot }, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Fehler beim Ausführen von '${packageManager} install': ${error.message}\n${stderr}`);
+        return reject(error);
+      }
+      console.log(stdout);
+      console.log(`Abhängigkeiten erfolgreich aktualisiert mit '${packageManager}'.`);
+      resolve();
     });
+  });
 }
-
 
 async function cleanupInstaller() {
   console.log('Installationsdateien werden bereinigt...');
@@ -183,7 +186,8 @@ async function cleanupInstaller() {
   console.log('Installationsverzeichnis entfernt.');
 }
 
+// --- Run Script ---
 runInstaller().catch(error => {
-  console.error('Ein Fehler ist während der Installation aufgetreten:', error);
+  console.error('\nEin schwerwiegender Fehler ist während der Installation aufgetreten:', error);
   process.exit(1);
 });
