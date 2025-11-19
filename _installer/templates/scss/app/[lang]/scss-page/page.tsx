@@ -1,26 +1,17 @@
 import type { Metadata } from 'next';
-import { getDictionary } from '@/src/get-dictionary';
-import { Locale } from '@/src/i18n-config';
-// import variables from '@/scss/variables.module.scss';
-import '@/scss/demo-page.scss';
+import styles from './demo.module.scss'
 
 export const metadata: Metadata = {
 	title: 'SCSS | Next.js + Tailwind CSS Kickstarter',
 };
 
-export default async function Page(props: { params: Promise<{ lang: Locale }> }) {
-	const params = await props.params;
-
-	const { lang } = params;
-
-	const dictionary = await getDictionary(lang);
-
+export default async function Page() {
 	return (
-		<div className="scss--pagewrapper">
-			<h1 className="scss--headline">
-				{dictionary['scssPage'].headline}
-				{/*<span style={{ color: variables.primaryColor }}>{dictionary['scssPage'].subtitle}</span>*/}
+		<div className={styles.pagewrapper}>
+			<h1 className={styles.headline}>
+				SCSS Demo-Seite
 			</h1>
+			<p>Next.js unterstützt Sass-Variablen, die aus CSS-Modul-Dateien exportiert werden.</p>
 		</div>
 	);
 }

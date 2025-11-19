@@ -9,7 +9,6 @@
       "selected": true,
       "devDependencies": { "sass": "^1.94.1" },
       "filesToCopy": [
-        { "from": "scss/scss", "to": "src/scss" },
         { "from": "scss/app/[lang]/scss-page", "to": "src/app/[lang]/scss-page" }
       ],
       "nextConfigModifications": { "addSassOptions": true }

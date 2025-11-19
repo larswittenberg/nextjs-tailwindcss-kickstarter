@@ -11,9 +11,5 @@
 	},
 	"mdxPage": {
 		"headline": "This is a MDX page - written in Markdown"
-	},
-	"scssPage": {
-		"headline": "SCSS Demo-Page",
-		"subtitle": "Next.js supports Sass variables exported from CSS Module files."
 	}
 }

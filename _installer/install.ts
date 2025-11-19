@@ -149,7 +149,7 @@ async function updateNextConfig(selectedModules: Module[]) {
     if (mods.addSassOptions) {
         content = content.replace(
             'reactStrictMode: true,',
-            'reactStrictMode: true,\n\tsassOptions: { includePaths: [path.join(__dirname, "src/scss")] },'
+            'reactStrictMode: true,\n\tsassOptions: { implementation: "sass-embedded", },'
         );
         console.log(`- 'sassOptions' zu next.config.js hinzugefügt.`);
     }
