@@ -70,6 +70,23 @@ async function runInstaller() {
   }));
   const answers = await inquirer.prompt(prompts);
 
+  let shouldDeleteDemoPages = false;
+  if (manifest.demoPages?.length) {
+    console.log('\nDemo-Seiten, die optional entfernt werden können:');
+    manifest.demoPages.forEach(page => console.log(`- ${page.name} (${page.path})`));
+
+    const { deleteDemoPages } = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'deleteDemoPages',
+        message: 'Sollen die Demo-Seiten entfernt werden?',
+        default: false,
+      },
+    ]);
+    shouldDeleteDemoPages = deleteDemoPages;
+    console.log('');
+  }
+
   const selectedModules = manifest.modules.filter(mod => answers[mod.id]);
   console.log('\nAusgewählte Module:', selectedModules.map(m => m.name).join(', ') || 'Keine', '\n');
 
@@ -85,7 +102,7 @@ async function runInstaller() {
   await installDependencies();
 
   // 5. Remove optional demo pages
-  await handleDemoPagesCleanup(manifest.demoPages);
+  await handleDemoPagesCleanup(manifest.demoPages, shouldDeleteDemoPages);
 
   // 6. Ask about cleanup
   const { shouldCleanup } = await inquirer.prompt([
@@ -208,29 +225,12 @@ async function updateCssFiles(selectedModules: Module[]) {
   console.log('CSS-Dateien aktualisiert.');
 }
 
-async function handleDemoPagesCleanup(demoPages?: DemoPage[]) {
+async function handleDemoPagesCleanup(demoPages: DemoPage[] | undefined, shouldDelete: boolean) {
   if (!demoPages?.length) {
     return;
   }
 
-  console.log('Demo-Seiten, die optional entfernt werden können:');
-  demoPages.forEach(page => console.log(`- ${page.name} (${page.path})`));
-  console.log('');
-
-  const { demoAction } = await inquirer.prompt([
-    {
-      type: 'list',
-      name: 'demoAction',
-      message: 'Sollen die Demo-Seiten entfernt werden?',
-      choices: [
-        { name: 'Ja, Demo-Seiten löschen', value: 'delete' },
-        { name: 'Nein, Demo-Seiten behalten', value: 'keep' },
-      ],
-      default: 'keep',
-    },
-  ]);
-
-  if (demoAction === 'keep') {
+  if (!shouldDelete) {
     console.log('Demo-Seiten werden beibehalten.');
     return;
   }
