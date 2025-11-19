@@ -69,6 +69,7 @@ async function runInstaller() {
     default: mod.selected,
   }));
   const answers = await inquirer.prompt(prompts);
+  const scssSelected = !!answers['scss'];
 
   let shouldDeleteDemoPages = false;
   if (manifest.demoPages?.length) {
@@ -98,7 +99,10 @@ async function runInstaller() {
   // 4. Install final dependencies
   await installDependencies();
 
-  // 5. Remove optional demo pages
+  // 5. Remove optional files
+  if (!scssSelected) {
+    removeScssDemoPage();
+  }
   await handleDemoPagesCleanup(manifest.demoPages, shouldDeleteDemoPages);
 
   // 6. Ask about cleanup
@@ -220,6 +224,14 @@ async function updateCssFiles(selectedModules: Module[]) {
   }
   fs.writeFileSync(mainCssPath, content);
   console.log('CSS-Dateien aktualisiert.');
+}
+
+function removeScssDemoPage() {
+  const scssDemoPath = path.resolve(projectRoot, 'src/app/[lang]/scss-page');
+  if (fs.existsSync(scssDemoPath)) {
+    fs.rmSync(scssDemoPath, { recursive: true, force: true });
+    console.log('- SCSS-Demo-Seite entfernt (SCSS wurde deaktiviert).');
+  }
 }
 
 async function handleDemoPagesCleanup(demoPages: DemoPage[] | undefined, shouldDelete: boolean) {
