@@ -63,12 +63,5 @@
         }
       }
     }
-  ],
-  "demoPages": [
-    {
-      "id": "rsc",
-      "name": "React Server Components Demo",
-      "path": "src/app/[lang]/rsc"
-    }
   ]
 }

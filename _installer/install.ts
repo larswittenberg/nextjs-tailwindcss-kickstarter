@@ -32,16 +32,9 @@ interface Module {
   };
 }
 
-interface DemoPage {
-  id: string;
-  name: string;
-  path: string;
-}
-
 interface Manifest {
   installerVersion: string;
   modules: Module[];
-  demoPages?: DemoPage[];
 }
 
 // --- Constants ---
@@ -71,20 +64,6 @@ async function runInstaller() {
   const answers = await inquirer.prompt(prompts);
   const scssSelected = !!answers['scss'];
 
-  let shouldDeleteDemoPages = false;
-  if (manifest.demoPages?.length) {
-    const { keepDemoPages } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'keepDemoPages',
-        message: 'Sollen die Demo-Seiten (RSC-Demo) behalten werden?',
-        default: true,
-      },
-    ]);
-    shouldDeleteDemoPages = !keepDemoPages;
-    console.log('');
-  }
-
   const selectedModules = manifest.modules.filter(mod => answers[mod.id]);
   console.log('\nAusgewählte Module:', selectedModules.map(m => m.name).join(', ') || 'Keine', '\n');
 
@@ -103,7 +82,6 @@ async function runInstaller() {
   if (!scssSelected) {
     removeScssDemoPage();
   }
-  await handleDemoPagesCleanup(manifest.demoPages, shouldDeleteDemoPages);
 
   // 6. Ask about cleanup
   const { shouldCleanup } = await inquirer.prompt([
@@ -235,27 +213,6 @@ function removeScssDemoPage() {
   if (fs.existsSync(scssDemoPath)) {
     fs.rmSync(scssDemoPath, { recursive: true, force: true });
     console.log('- SCSS-Demo-Seite entfernt (SCSS wurde deaktiviert).');
-  }
-}
-
-async function handleDemoPagesCleanup(demoPages: DemoPage[] | undefined, shouldDelete: boolean) {
-  if (!demoPages?.length) {
-    return;
-  }
-
-  if (!shouldDelete) {
-    console.log('Demo-Seiten werden beibehalten.');
-    return;
-  }
-
-  for (const page of demoPages) {
-    const targetPath = path.resolve(projectRoot, page.path);
-    if (fs.existsSync(targetPath)) {
-      fs.rmSync(targetPath, { recursive: true, force: true });
-      console.log(`- '${page.name}' entfernt (${page.path}).`);
-    } else {
-      console.log(`- '${page.name}' war nicht vorhanden (${page.path}).`);
-    }
   }
 }
 

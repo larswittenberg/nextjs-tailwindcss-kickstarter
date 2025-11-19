@@ -11,16 +11,15 @@ const links = [
 ];
 
 const features = [
-        'Next.js 16.0',
-        'React 19.2',
-        'TailwindCSS 4.1',
+	'Next.js 16.0',
+	'React 19.2',
+	'TailwindCSS 4.1',
 	'SCSS Support',
 	'TypeScript',
 	'PostCSS',
 	'Autoprefixer',
 	'Prettier',
 	'ESLint',
-	'React Server Components',
 	'Next.js App Router',
 	'i18n Support',
 	'Google Fonts via next/font',
@@ -35,10 +34,6 @@ const demoPages = [
 	{
 		href: 'mdx-page',
 		label: 'Markdown Content',
-	},
-	{
-		href: 'rsc',
-		label: 'React Server Components',
 	},
 	{
 		href: 'scss-page',
