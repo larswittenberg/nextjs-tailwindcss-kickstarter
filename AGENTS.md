@@ -1,9 +1,17 @@
 # Repository Guidelines
 
+## Project Setup & Initial Configuration
+
+The project features an interactive installer script to streamline the initial setup and customization.
+
+### `yarn setup`
+
+This command runs `_installer/install.ts`, an interactive script that guides you through selecting and integrating various optional features into your project, such as SCSS support, MDX, Tailwind CSS Typography, and `shadcn/ui`. It automatically updates your `package.json`, copies necessary template files, and installs all required dependencies. This script is intended to be run once at the beginning of a new project instance to configure it according to your needs.
+
 ## Project Structure & Module Organization
 This Next.js 15 app uses `src/app/[lang]/` for route segments per locale; create new pages as nested folders with `page.tsx` and optional `layout.tsx`. Shared UI lives in `src/components/`, while localized copy is handled via `src/dictionaries/` and helper loaders in `src/get-dictionary.ts`. Global styles come from Tailwind via `src/styles/` and SCSS utilities under `src/scss/`. Static assets belong in `public/`, and MDX helpers reside in the root `mdx-components.tsx`.
 
-## Build, Test, and Development Commands
+## Key Commands & Scripts
 Run `yarn dev` for the local dev server on port 3000, or `yarn dev-https` when you need an HTTPS tunnel. Use `yarn build` to create an optimized production bundle and `yarn start` to serve it. `yarn lint` runs the ESLint configuration and should be clean before committing, while `yarn format` applies Prettier with the Tailwind plugin. `yarn export` produces a static export after wiping `.next/`.
 Use `yarn shadcn` (for example `yarn shadcn add button`) to scaffold UI primitives; the generator writes into `src/components/ui/`, so review and localize output before committing.
 
