@@ -150,7 +150,19 @@ async function updateNextConfig(selectedModules: Module[]) {
         console.log(`- 'sassOptions' zu next.config.js hinzugefügt.`);
     }
     if (mods.addMdxWrapper) {
-        content = `const withMDX = require('@next/mdx')();\n${content}`;
+        const mdxConfig = `const withMDX = require('@next/mdx')({
+            extension: /\.mdx?$/,
+            options: {
+                // If you use remark-gfm, you'll need to use next.config.mjs
+                // as the package is ESM only
+                // https://github.com/remarkjs/remark-gfm#install
+                remarkPlugins: [],
+                rehypePlugins: [],
+                // If you use \`MDXProvider\`, uncomment the following line.
+                // providerImportSource: "@mdx-js/react",
+            },
+        });`;
+        content = `${mdxConfig}\n${content}`;
         content = content.replace(
             'module.exports = nextConfig;',
             'module.exports = withMDX(nextConfig);'
