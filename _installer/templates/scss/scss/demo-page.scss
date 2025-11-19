@@ -1,0 +1,29 @@
+@use 'sass:color';
+
+$bg-start: #1f2937;
+$bg-end: #0f172a;
+$accent: #ec4899;
+
+.scss--pagewrapper {
+  display: grid;
+  place-items: center;
+  min-height: 60vh;
+  padding: 4rem 1.5rem;
+  background: radial-gradient(circle at 20% 20%, color.adjust($bg-start, $alpha: -0.3), $bg-end);
+
+  .scss--headline {
+    font-size: clamp(2.25rem, 3vw + 1rem, 3.5rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $accent;
+    text-align: center;
+
+    span {
+      display: inline-block;
+      padding: 0.25em 0.4em;
+      border-radius: 9999px;
+      background: color.mix($accent, white, 20%);
+      color: #0f172a;
+    }
+  }
+}
