@@ -156,6 +156,10 @@ async function handleFileCopying(selectedModules: Module[]) {
     for (const op of module.filesToCopy) {
       const source = path.resolve(templatesDir, op.from);
       const dest = path.resolve(projectRoot, op.to);
+      if (!fs.existsSync(source)) {
+        console.log(`- Übersprungen: Quelle nicht gefunden (${op.from})`);
+        continue;
+      }
       fs.cpSync(source, dest, { recursive: true });
       console.log(`- '${op.from}' nach '${op.to}' kopiert.`);
     }
