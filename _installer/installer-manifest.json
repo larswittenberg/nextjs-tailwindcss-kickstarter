@@ -63,5 +63,17 @@
         }
       }
     }
+  ],
+  "demoPages": [
+    {
+      "id": "next-image",
+      "name": "Next Image Demo",
+      "path": "src/app/[lang]/next-image"
+    },
+    {
+      "id": "rsc",
+      "name": "React Server Components Demo",
+      "path": "src/app/[lang]/rsc"
+    }
   ]
 }

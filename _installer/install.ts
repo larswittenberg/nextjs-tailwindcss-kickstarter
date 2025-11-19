@@ -32,9 +32,16 @@ interface Module {
   };
 }
 
+interface DemoPage {
+  id: string;
+  name: string;
+  path: string;
+}
+
 interface Manifest {
   installerVersion: string;
   modules: Module[];
+  demoPages?: DemoPage[];
 }
 
 // --- Constants ---
@@ -73,11 +80,14 @@ async function runInstaller() {
   await handleFileCopying(selectedModules);
   await updateNextConfig(selectedModules);
   await updateCssFiles(selectedModules);
-  
+
   // 4. Install final dependencies
   await installDependencies();
 
-  // 5. Ask about cleanup
+  // 5. Remove optional demo pages
+  await handleDemoPagesCleanup(manifest.demoPages);
+
+  // 6. Ask about cleanup
   const { shouldCleanup } = await inquirer.prompt([
     {
         type: 'confirm',
@@ -196,6 +206,44 @@ async function updateCssFiles(selectedModules: Module[]) {
   }
   fs.writeFileSync(mainCssPath, content);
   console.log('CSS-Dateien aktualisiert.');
+}
+
+async function handleDemoPagesCleanup(demoPages?: DemoPage[]) {
+  if (!demoPages?.length) {
+    return;
+  }
+
+  console.log('Demo-Seiten, die optional entfernt werden können:');
+  demoPages.forEach(page => console.log(`- ${page.name} (${page.path})`));
+  console.log('');
+
+  const { demoAction } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'demoAction',
+      message: 'Sollen die Demo-Seiten entfernt werden?',
+      choices: [
+        { name: 'Ja, Demo-Seiten löschen', value: 'delete' },
+        { name: 'Nein, Demo-Seiten behalten', value: 'keep' },
+      ],
+      default: 'keep',
+    },
+  ]);
+
+  if (demoAction === 'keep') {
+    console.log('Demo-Seiten werden beibehalten.');
+    return;
+  }
+
+  for (const page of demoPages) {
+    const targetPath = path.resolve(projectRoot, page.path);
+    if (fs.existsSync(targetPath)) {
+      fs.rmSync(targetPath, { recursive: true, force: true });
+      console.log(`- '${page.name}' entfernt (${page.path}).`);
+    } else {
+      console.log(`- '${page.name}' war nicht vorhanden (${page.path}).`);
+    }
+  }
 }
 
 // --- Execution & Cleanup Functions ---
