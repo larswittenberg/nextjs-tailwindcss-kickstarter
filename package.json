@@ -3,12 +3,11 @@
   "private": true,
   "packageManager": "yarn@4.10.3",
   "scripts": {
-    "install": "yarn install && tsx _installer/install.ts",
-    "setup": "yarn install && tsx _installer/install.ts"
+    "setup": "yarn install --silent && tsx _installer/install.ts"
   },
   "devDependencies": {
+    "@types/inquirer": "^9.0.7",
     "inquirer": "^10.1.2",
-    "tsx": "^4.16.2",
-    "@types/inquirer": "^9.0.7"
+    "tsx": "^4.16.2"
   }
 }
