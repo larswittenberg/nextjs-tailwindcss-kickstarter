@@ -190,8 +190,7 @@ async function updateCssFiles(selectedModules: Module[]) {
 
 async function installDependencies() {
   console.log('Abhängigkeiten werden installiert...');
-  const packageJson = JSON.parse(fs.readFileSync(rootPackageJsonPath, 'utf-8'));
-  const packageManager = packageJson.packageManager?.split('@')[0] || 'npm';
+  const packageManager = 'yarn';
 
   return new Promise<void>((resolve, reject) => {
     const child = exec(`${packageManager} install`, { cwd: projectRoot });
