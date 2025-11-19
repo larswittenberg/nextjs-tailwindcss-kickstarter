@@ -40,6 +40,25 @@
         "removeWrapper": "withMDX",
         "removeFromPageExtensions": "mdx"
       }
+    },
+    {
+      "id": "tailwind-typography",
+      "name": "Tailwind CSS Typography",
+      "description": "Fügt Standard-Typografieformatierungen für Prosa-Text hinzu.",
+      "type": "styling",
+      "selected": true,
+      "dependencies": {
+        "@tailwindcss/typography": "^0.5.19"
+      },
+      "filesToDeleteIfDeselected": [
+        "src/app/[lang]/tailwind-typography"
+      ],
+      "cssModifications": [
+        {
+          "file": "src/styles/main.css",
+          "removeLineContaining": "@plugin '@tailwindcss/typography';"
+        }
+      ]
     }
   ]
 }

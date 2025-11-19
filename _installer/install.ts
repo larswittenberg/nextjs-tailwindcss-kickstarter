@@ -19,6 +19,10 @@ interface Module {
     removeWrapper?: string;
     removeFromPageExtensions?: string;
   };
+  cssModifications?: Array<{
+    file: string;
+    removeLineContaining: string;
+  }>;
 }
 
 interface Manifest {
@@ -59,6 +63,7 @@ async function runInstaller() {
   // 2. Apply Changes
   await updatePackageJson(deselectedModules);
   await updateNextConfig(deselectedModules);
+  await updateCssFiles(deselectedModules);
   await handleFilesToDelete(deselectedModules);
 
   // 3. Install Dependencies
@@ -143,6 +148,25 @@ async function updateNextConfig(deselectedModules: Module[]) {
 
   fs.writeFileSync(nextConfigPath, content);
   console.log('next.config.js aktualisiert.');
+}
+
+async function updateCssFiles(deselectedModules: Module[]) {
+    console.log('CSS-Dateien werden aktualisiert...');
+    for (const module of deselectedModules) {
+        if (!module.cssModifications) continue;
+
+        for (const mod of module.cssModifications) {
+            const filePath = path.resolve(projectRoot, mod.file);
+            if (fs.existsSync(filePath)) {
+                let content = fs.readFileSync(filePath, 'utf-8');
+                const lines = content.split('\n');
+                const newLines = lines.filter(line => !line.includes(mod.removeLineContaining));
+                content = newLines.join('\n');
+                fs.writeFileSync(filePath, content);
+                console.log(`- Zeile mit '${mod.removeLineContaining}' aus ${mod.file} entfernt.`);
+            }
+        }
+    }
 }
 
 async function handleFilesToDelete(deselectedModules: Module[]) {
