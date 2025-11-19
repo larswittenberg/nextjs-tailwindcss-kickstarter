@@ -77,7 +77,7 @@ async function runInstaller() {
       {
         type: 'confirm',
         name: 'keepDemoPages',
-        message: 'Sollen die Demo-Seiten (Next Image Demo & RSC-Demo) behalten werden?',
+        message: 'Sollen die Demo-Seiten (RSC-Demo) behalten werden?',
         default: true,
       },
     ]);
@@ -144,7 +144,7 @@ async function buildPackageJson(selectedModules: Module[]) {
   Object.assign(basePackageJson.devDependencies, installerPackageJson.devDependencies);
 
   basePackageJson.scripts.setup = 'tsx _installer/install.ts';
-  
+
   fs.writeFileSync(rootPackageJsonPath, JSON.stringify(basePackageJson, null, 2) + '\n');
   console.log('package.json erfolgreich erstellt.');
 }
@@ -283,13 +283,13 @@ async function installDependencies() {
 async function cleanupInstaller() {
   console.log('Installationsdateien werden bereinigt...');
   const packageJson = JSON.parse(fs.readFileSync(rootPackageJsonPath, 'utf-8'));
-  
+
   if (packageJson.scripts?.setup) {
     delete packageJson.scripts.setup;
   }
   fs.writeFileSync(rootPackageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
   fs.rmSync(path.resolve(projectRoot, '_installer'), { recursive: true, force: true });
-  
+
   console.log('Installer-Dateien und setup-Skript entfernt.');
 }
 
