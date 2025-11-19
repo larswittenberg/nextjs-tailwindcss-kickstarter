@@ -1,0 +1,22 @@
+{
+  "installerVersion": "1.0.0",
+  "modules": [
+    {
+      "id": "scss",
+      "name": "SCSS Support",
+      "description": "Integrates Sass/SCSS preprocessor for styling.",
+      "type": "styling",
+      "selected": true,
+      "devDependencies": {
+        "sass": "^1.94.1"
+      },
+      "filesToDeleteIfDeselected": [
+        "src/scss/demo-page.scss",
+        "src/scss/variables.module.scss"
+      ],
+      "nextConfigModifications": {
+        "removeIfDeselected": "sassOptions"
+      }
+    }
+  ]
+}

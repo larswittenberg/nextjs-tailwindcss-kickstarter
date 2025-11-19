@@ -22,7 +22,8 @@
     "cleanAll": "rm -rf node_modules && rm yarn.lock",
     "lint": "next lint",
     "format": "prettier --write .",
-    "export": "npx rimraf .next && next build && next export"
+    "export": "npx rimraf .next && next build && next export",
+    "setup": "tsx _installer/install.ts"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.6.2",
@@ -54,10 +55,12 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
+    "inquirer": "^10.1.2",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.1",
     "sass": "^1.94.1",
     "shadcn-ui": "^0.9.5",
+    "tsx": "^4.16.2",
     "typescript": "^5.9.3"
   },
   "resolutions": {
