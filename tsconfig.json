@@ -24,6 +24,7 @@
     // Absolute Imports and Module Path Aliases
     // https://nextjs.org/docs/app/building-your-application/configuring/absolute-imports-and-module-aliases
     "paths": {
+      "@/*": ["./src/*"],
       "@/components/*": [
         "./src/components/*"
       ],

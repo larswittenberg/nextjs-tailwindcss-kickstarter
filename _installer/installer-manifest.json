@@ -59,6 +59,19 @@
           "removeLineContaining": "@plugin '@tailwindcss/typography';"
         }
       ]
+    },
+    {
+      "id": "shadcn-ui",
+      "name": "shadcn/ui",
+      "description": "Eine Sammlung von UI-Komponenten. (Aktuell nur als Gerüst vorhanden)",
+      "type": "features",
+      "selected": true,
+      "devDependencies": {
+        "shadcn-ui": "^0.9.5"
+      },
+      "filesToDeleteIfDeselected": [
+        "src/components/ui"
+      ]
     }
   ]
 }
