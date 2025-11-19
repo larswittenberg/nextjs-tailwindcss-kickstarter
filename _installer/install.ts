@@ -72,18 +72,15 @@ async function runInstaller() {
 
   let shouldDeleteDemoPages = false;
   if (manifest.demoPages?.length) {
-    console.log('\nDemo-Seiten, die optional entfernt werden können:');
-    manifest.demoPages.forEach(page => console.log(`- ${page.name} (${page.path})`));
-
-    const { deleteDemoPages } = await inquirer.prompt([
+    const { keepDemoPages } = await inquirer.prompt([
       {
         type: 'confirm',
-        name: 'deleteDemoPages',
-        message: 'Sollen die Demo-Seiten entfernt werden?',
-        default: false,
+        name: 'keepDemoPages',
+        message: 'Sollen die Demo-Seiten (Next Image Demo & RSC-Demo) behalten werden?',
+        default: true,
       },
     ]);
-    shouldDeleteDemoPages = deleteDemoPages;
+    shouldDeleteDemoPages = !keepDemoPages;
     console.log('');
   }
 
