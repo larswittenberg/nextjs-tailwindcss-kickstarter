@@ -1,27 +1,20 @@
 {
-  "installerVersion": "1.0.0",
+  "installerVersion": "2.0.0",
   "modules": [
     {
       "id": "scss",
       "name": "SCSS Support",
-      "description": "Integrates Sass/SCSS preprocessor for styling.",
+      "description": "Fügt Unterstützung für SASS/SCSS hinzu.",
       "type": "styling",
       "selected": true,
-      "devDependencies": {
-        "sass": "^1.94.1"
-      },
-      "filesToDeleteIfDeselected": [
-        "src/scss/demo-page.scss",
-        "src/scss/variables.module.scss"
-      ],
-      "nextConfigModifications": {
-        "removeIfDeselected": "sassOptions"
-      }
+      "devDependencies": { "sass": "^1.94.1" },
+      "filesToCopy": [{ "from": "scss", "to": "src/scss" }],
+      "nextConfigModifications": { "addSassOptions": true }
     },
     {
       "id": "mdx",
-      "name": "MDX Support (Markdown Pages)",
-      "description": "Ermöglicht das Schreiben von React-Komponenten in Markdown (.mdx).",
+      "name": "MDX Support",
+      "description": "Ermöglicht die Verwendung von .mdx-Dateien als Seiten.",
       "type": "features",
       "selected": true,
       "dependencies": {
@@ -29,49 +22,46 @@
         "@mdx-js/react": "^3.1.1",
         "@next/mdx": "16.0.3"
       },
-      "devDependencies": {
-        "@types/mdx": "^2.0.13"
-      },
-      "filesToDeleteIfDeselected": [
-        "mdx-components.tsx",
-        "src/app/[lang]/mdx-page"
+      "devDependencies": { "@types/mdx": "^2.0.13" },
+      "filesToCopy": [
+        { "from": "mdx/mdx-components.tsx", "to": "mdx-components.tsx" },
+        { "from": "mdx/app/[lang]/mdx-page", "to": "src/app/[lang]/mdx-page"}
       ],
-      "nextConfigModifications": {
-        "removeWrapper": "withMDX",
-        "removeFromPageExtensions": "mdx"
-      }
+      "nextConfigModifications": { "addMdxWrapper": true }
     },
     {
       "id": "tailwind-typography",
       "name": "Tailwind CSS Typography",
-      "description": "Fügt Standard-Typografieformatierungen für Prosa-Text hinzu.",
+      "description": "Fügt das @tailwindcss/typography-Plugin hinzu.",
       "type": "styling",
       "selected": true,
-      "dependencies": {
-        "@tailwindcss/typography": "^0.5.19"
-      },
-      "filesToDeleteIfDeselected": [
-        "src/app/[lang]/tailwind-typography"
-      ],
-      "cssModifications": [
-        {
-          "file": "src/styles/main.css",
-          "removeLineContaining": "@plugin '@tailwindcss/typography';"
-        }
-      ]
+      "dependencies": { "@tailwindcss/typography": "^0.5.19" },
+      "filesToCopy": [{ "from": "tailwind-typography/app/[lang]/tailwind-typography", "to": "src/app/[lang]/tailwind-typography" }],
+      "cssModifications": { "addPlugin": "@plugin '@tailwindcss/typography';" }
     },
     {
       "id": "shadcn-ui",
       "name": "shadcn/ui",
-      "description": "Eine Sammlung von UI-Komponenten. (Aktuell nur als Gerüst vorhanden)",
+      "description": "Integriert die shadcn/ui-Komponentenbibliothek.",
       "type": "features",
       "selected": true,
-      "devDependencies": {
-        "shadcn-ui": "^0.9.5"
+      "dependencies": {
+        "class-variance-authority": "^0.7.0",
+        "lucide-react": "^0.417.0",
+        "tailwind-merge": "^2.4.0"
       },
-      "filesToDeleteIfDeselected": [
-        "src/components/ui"
-      ]
+      "devDependencies": { "shadcn-ui": "^0.9.5" },
+      "filesToCopy": [
+          { "from": "shadcn/components.json", "to": "components.json"},
+          { "from": "shadcn/src/lib", "to": "src/lib"},
+          { "from": "shadcn/src/components/ui", "to": "src/components/ui"}
+      ],
+      "cssModifications": {
+        "addBlock": {
+          "anchor": "/* --- shadcn-ui theme start --- */",
+          "content": "/* --- shadcn-ui theme start --- */\n\t--background: 0 0% 100%;\n    --foreground: 222.2 84% 4.9%;\n    --card: 0 0% 100%;\n    --card-foreground: 222.2 84% 4.9%;\n    --popover: 0 0% 100%;\n    --popover-foreground: 222.2 84% 4.9%;\n    --primary: 222.2 47.4% 11.2%;\n    --primary-foreground: 210 40% 98%;\n    --secondary: 210 40% 96.1%;\n    --secondary-foreground: 222.2 47.4% 11.2%;\n    --muted: 210 40% 96.1%;\n    --muted-foreground: 215.4 16.3% 46.9%;\n    --accent: 210 40% 96.1%;\n    --accent-foreground: 222.2 47.4% 11.2%;\n    --destructive: 0 84.2% 60.2%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 214.3 31.8% 91.4%;\n    --input: 214.3 31.8% 91.4%;\n    --ring: 222.2 84% 4.9%;\n    --radius: 0.5rem;\n\n    borderRadius: {\n      lg: 'var(--radius)',\n      md: 'calc(var(--radius) - 2px)',\n      sm: 'calc(var(--radius) - 4px)',\n    },\n    keyframes: {\n      'accordion-down': {\n        from: { height: '0' },\n        to: { height: 'var(--radix-accordion-content-height)' },\n      },\n      'accordion-up': {\n        from: { height: 'var(--radix-accordion-content-height)' },\n        to: { height: '0' },\n      },\n    },\n    animation: {\n      'accordion-down': 'accordion-down 0.2s ease-out',\n      'accordion-up': 'accordion-up 0.2s ease-out'\n    }\n\t/* --- shadcn-ui theme end --- */\n"
+        }
+      }
     }
   ]
 }

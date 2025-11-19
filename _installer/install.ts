@@ -5,6 +5,11 @@ import { fileURLToPath } from 'url';
 import { exec } from 'child_process';
 
 // --- Types ---
+interface FileCopyOperation {
+  from: string;
+  to: string;
+}
+
 interface Module {
   id: string;
   name: string;
@@ -13,16 +18,18 @@ interface Module {
   selected: boolean;
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
-  filesToDeleteIfDeselected?: string[];
+  filesToCopy?: FileCopyOperation[];
   nextConfigModifications?: {
-    removeIfDeselected?: string;
-    removeWrapper?: string;
-    removeFromPageExtensions?: string;
+    addSassOptions?: boolean;
+    addMdxWrapper?: boolean;
   };
-  cssModifications?: Array<{
-    file: string;
-    removeLineContaining: string;
-  }>;
+  cssModifications?: {
+    addPlugin?: string;
+    addBlock?: {
+      anchor: string;
+      content: string;
+    };
+  };
 }
 
 interface Manifest {
@@ -34,10 +41,12 @@ interface Manifest {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '../');
-const installerDir = path.resolve(projectRoot, '_installer');
-const manifestPath = path.resolve(installerDir, 'installer-manifest.json');
-const packageJsonPath = path.resolve(projectRoot, 'package.json');
+const templatesDir = path.resolve(__dirname, 'templates');
+const manifestPath = path.resolve(__dirname, 'installer-manifest.json');
+const rootPackageJsonPath = path.resolve(projectRoot, 'package.json');
+const basePackageJsonPath = path.resolve(templatesDir, 'package.base.json');
 const nextConfigPath = path.resolve(projectRoot, 'next.config.js');
+const mainCssPath = path.resolve(projectRoot, 'src/styles/main.css');
 
 // --- Main Installer Logic ---
 async function runInstaller() {
@@ -49,27 +58,26 @@ async function runInstaller() {
   const prompts = manifest.modules.map(mod => ({
     type: 'confirm',
     name: mod.id,
-    message: `Möchtest du ${mod.name} nutzen? (${mod.description})`,
+    message: `Soll '${mod.name}' hinzugefügt werden? (${mod.description})`,
     default: mod.selected,
   }));
   const answers = await inquirer.prompt(prompts);
 
   const selectedModules = manifest.modules.filter(mod => answers[mod.id]);
-  const deselectedModules = manifest.modules.filter(mod => !answers[mod.id]);
+  console.log('\nAusgewählte Module:', selectedModules.map(m => m.name).join(', ') || 'Keine', '\n');
 
-  console.log('\nAusgewählte Module:', selectedModules.map(m => m.name).join(', ') || 'Keine');
-  console.log('Abgewählte Module:', deselectedModules.map(m => m.name).join(', ') || 'Keine', '\n');
+  // 2. Build and Write Final package.json
+  await buildPackageJson(selectedModules);
 
-  // 2. Apply Changes
-  await updatePackageJson(deselectedModules);
-  await updateNextConfig(deselectedModules);
-  await updateCssFiles(deselectedModules);
-  await handleFilesToDelete(deselectedModules);
-
-  // 3. Install Dependencies
+  // 3. Apply file and config changes for selected features
+  await handleFileCopying(selectedModules);
+  await updateNextConfig(selectedModules);
+  await updateCssFiles(selectedModules);
+  
+  // 4. Install final dependencies
   await installDependencies();
 
-  // 4. Ask about cleanup
+  // 5. Ask about cleanup
   const { shouldCleanup } = await inquirer.prompt([
     {
         type: 'confirm',
@@ -79,10 +87,8 @@ async function runInstaller() {
     },
   ]);
 
-  // 5. Cleanup (if requested)
   if (shouldCleanup) {
     await cleanupInstaller();
-    await removeSetupScript();
   } else {
     console.log('\nInstaller-Skript wird beibehalten. Du kannst es später erneut ausführen.');
   }
@@ -90,144 +96,129 @@ async function runInstaller() {
   console.log('🎉 Setup abgeschlossen! Viel Spaß beim Codieren!');
 }
 
-// --- File Modification Functions ---
+// --- File & Config Modification Functions ---
 
-async function updatePackageJson(deselectedModules: Module[]) {
-  console.log('package.json wird aktualisiert...');
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+async function buildPackageJson(selectedModules: Module[]) {
+  console.log('package.json wird erstellt...');
+  const basePackageJson = JSON.parse(fs.readFileSync(basePackageJsonPath, 'utf-8'));
 
-  for (const module of deselectedModules) {
-    if (module.dependencies && packageJson.dependencies) {
-      for (const dep in module.dependencies) {
-        delete packageJson.dependencies[dep];
-      }
+  for (const module of selectedModules) {
+    if (module.dependencies) {
+      Object.assign(basePackageJson.dependencies, module.dependencies);
     }
-    if (module.devDependencies && packageJson.devDependencies) {
-      for (const devDep in module.devDependencies) {
-        delete packageJson.devDependencies[devDep];
-      }
+    if (module.devDependencies) {
+      Object.assign(basePackageJson.devDependencies, module.devDependencies);
     }
   }
 
-  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
-  console.log('package.json aktualisiert.');
+  // Add the installer script itself to devDependencies for potential re-runs
+  const installerPackageJson = JSON.parse(fs.readFileSync(rootPackageJsonPath, 'utf-8'));
+  Object.assign(basePackageJson.devDependencies, installerPackageJson.devDependencies);
+
+  basePackageJson.scripts.setup = 'tsx _installer/install.ts';
+  
+  fs.writeFileSync(rootPackageJsonPath, JSON.stringify(basePackageJson, null, 2) + '\n');
+  console.log('package.json erfolgreich erstellt.');
 }
 
-async function updateNextConfig(deselectedModules: Module[]) {
+async function handleFileCopying(selectedModules: Module[]) {
+  console.log('Dateien werden kopiert...');
+  for (const module of selectedModules) {
+    if (!module.filesToCopy) continue;
+    for (const op of module.filesToCopy) {
+      const source = path.resolve(templatesDir, op.from);
+      const dest = path.resolve(projectRoot, op.to);
+      fs.cpSync(source, dest, { recursive: true });
+      console.log(`- '${op.from}' nach '${op.to}' kopiert.`);
+    }
+  }
+}
+
+async function updateNextConfig(selectedModules: Module[]) {
   console.log('next.config.js wird aktualisiert...');
   let content = fs.readFileSync(nextConfigPath, 'utf-8');
 
-  for (const module of deselectedModules) {
+  for (const module of selectedModules) {
     const mods = module.nextConfigModifications;
     if (!mods) continue;
 
-    // Remove a simple key-value block (like sassOptions)
-    if (mods.removeIfDeselected) {
-      const regex = new RegExp(`\s*${mods.removeIfDeselected}:\s*\{[\s\S]*?\},?`, 'm');
-      content = content.replace(regex, '');
-      console.log(`- '${mods.removeIfDeselected}' aus next.config.js entfernt.`);
+    if (mods.addSassOptions) {
+        content = content.replace(
+            'reactStrictMode: true,',
+            'reactStrictMode: true,\n\tsassOptions: { includePaths: [path.join(__dirname, "src/scss")] },'
+        );
+        console.log(`- 'sassOptions' zu next.config.js hinzugefügt.`);
     }
-
-    // Remove a page extension from the pageExtensions array
-    if (mods.removeFromPageExtensions) {
-      const regex = new RegExp(`'${mods.removeFromPageExtensions}',?\s*|\s*,'${mods.removeFromPageExtensions}'`, 'g');
-      content = content.replace(regex, '');
-      console.log(`- '${mods.removeFromPageExtensions}' aus 'pageExtensions' entfernt.`);
-    }
-    
-    // Remove a wrapper function (like withMDX)
-    if (mods.removeWrapper) {
-      const wrapperConstRegex = new RegExp(`const\s+${mods.removeWrapper}\s*=\s*require\(.*\);?`, 'm');
-      content = content.replace(wrapperConstRegex, '');
-      
-      const moduleExportRegex = new RegExp(`module\.exports\s*=\s*${mods.removeWrapper}\((.*)\);`, 's');
-      content = content.replace(moduleExportRegex, 'module.exports = $1;');
-      console.log(`- Wrapper '${mods.removeWrapper}' aus next.config.js entfernt.`);
+    if (mods.addMdxWrapper) {
+        content = `const withMDX = require('@next/mdx')();\n${content}`;
+        content = content.replace(
+            'module.exports = nextConfig;',
+            'module.exports = withMDX(nextConfig);'
+        );
+        content = content.replace(
+            "pageExtensions: ['js', 'jsx', 'ts', 'tsx']",
+            "pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx']"
+        );
+        console.log(`- 'withMDX'-Wrapper zu next.config.js hinzugefügt.`);
     }
   }
-
   fs.writeFileSync(nextConfigPath, content);
   console.log('next.config.js aktualisiert.');
 }
 
-async function updateCssFiles(deselectedModules: Module[]) {
-    console.log('CSS-Dateien werden aktualisiert...');
-    for (const module of deselectedModules) {
-        if (!module.cssModifications) continue;
+async function updateCssFiles(selectedModules: Module[]) {
+  console.log('CSS-Dateien werden aktualisiert...');
+  let content = fs.readFileSync(mainCssPath, 'utf-8');
+  for (const module of selectedModules) {
+    if (!module.cssModifications) continue;
+    const mods = module.cssModifications;
 
-        for (const mod of module.cssModifications) {
-            const filePath = path.resolve(projectRoot, mod.file);
-            if (fs.existsSync(filePath)) {
-                let content = fs.readFileSync(filePath, 'utf-8');
-                const lines = content.split('\n');
-                const newLines = lines.filter(line => !line.includes(mod.removeLineContaining));
-                content = newLines.join('\n');
-                fs.writeFileSync(filePath, content);
-                console.log(`- Zeile mit '${mod.removeLineContaining}' aus ${mod.file} entfernt.`);
-            }
-        }
+    if (mods.addPlugin) {
+      content = content.replace('@import \'tailwindcss\';', `@import 'tailwindcss';\n${mods.addPlugin}`);
+      console.log(`- Plugin '${mods.addPlugin}' zu main.css hinzugefügt.`);
     }
-}
-
-async function handleFilesToDelete(deselectedModules: Module[]) {
-  console.log('Nicht benötigte Dateien und Ordner werden gelöscht...');
-  for (const module of deselectedModules) {
-    if (!module.filesToDeleteIfDeselected) continue;
-
-    for (const fileOrDirPath of module.filesToDeleteIfDeselected) {
-      const fullPath = path.resolve(projectRoot, fileOrDirPath);
-      if (fs.existsSync(fullPath)) {
-        try {
-          const stat = fs.statSync(fullPath);
-          if (stat.isDirectory()) {
-            fs.rmSync(fullPath, { recursive: true, force: true });
-            console.log(`- Verzeichnis gelöscht: ${fileOrDirPath}`);
-          } else {
-            fs.unlinkSync(fullPath);
-            console.log(`- Datei gelöscht: ${fileOrDirPath}`);
-          }
-        } catch (e) {
-            console.error(`Fehler beim Löschen von ${fullPath}:`, e)
-        }
-      }
+    if (mods.addBlock) {
+      content = content.replace(mods.addBlock.anchor, mods.addBlock.content);
+      console.log(`- Theme-Block zu main.css hinzugefügt.`);
     }
   }
+  fs.writeFileSync(mainCssPath, content);
+  console.log('CSS-Dateien aktualisiert.');
 }
 
-// --- Execution Functions ---
+// --- Execution & Cleanup Functions ---
 
 async function installDependencies() {
-  console.log('Paketmanager wird ausgeführt, um Abhängigkeiten zu installieren/entfernen...');
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+  console.log('Abhängigkeiten werden installiert...');
+  const packageJson = JSON.parse(fs.readFileSync(rootPackageJsonPath, 'utf-8'));
   const packageManager = packageJson.packageManager?.split('@')[0] || 'npm';
 
   return new Promise<void>((resolve, reject) => {
-    exec(`${packageManager} install`, { cwd: projectRoot }, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Fehler beim Ausführen von '${packageManager} install': ${error.message}\n${stderr}`);
-        return reject(error);
+    const child = exec(`${packageManager} install`, { cwd: projectRoot });
+    child.stdout?.pipe(process.stdout);
+    child.stderr?.pipe(process.stderr);
+    child.on('close', (code) => {
+      if (code === 0) {
+        console.log(`Abhängigkeiten erfolgreich installiert mit '${packageManager}'.`);
+        resolve();
+      } else {
+        reject(new Error(`'${packageManager} install' fehlgeschlagen mit Code ${code}`));
       }
-      console.log(stdout);
-      console.log(`Abhängigkeiten erfolgreich aktualisiert mit '${packageManager}'.`);
-      resolve();
     });
   });
 }
 
 async function cleanupInstaller() {
   console.log('Installationsdateien werden bereinigt...');
-  fs.rmSync(installerDir, { recursive: true, force: true });
-  console.log('Installationsverzeichnis entfernt.');
-}
-
-async function removeSetupScript() {
-  console.log('setup-Skript aus package.json wird entfernt...');
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+  const packageJson = JSON.parse(fs.readFileSync(rootPackageJsonPath, 'utf-8'));
+  
   if (packageJson.scripts?.setup) {
     delete packageJson.scripts.setup;
   }
-  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
-  console.log('setup-Skript entfernt.');
+  fs.writeFileSync(rootPackageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
+  fs.rmSync(path.resolve(projectRoot, '_installer'), { recursive: true, force: true });
+  
+  console.log('Installer-Dateien und setup-Skript entfernt.');
 }
 
 // --- Run Script ---

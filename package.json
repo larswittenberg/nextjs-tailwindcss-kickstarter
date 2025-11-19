@@ -1,75 +1,13 @@
 {
-  "name": "nextjs-tailwindcss-kickstarter",
-  "description": "Basic template setup with Next.js + Tailwind CSS and some helpers.",
-  "version": "1.2.0",
-  "homepage": "https://nextjs-tailwindcss-kickstarter.vercel.app/",
-  "author": {
-    "name": "Lars Wittenberg",
-    "url": "https://larswittenberg.de"
-  },
+  "name": "nextjs-kickstarter-installer",
+  "private": true,
   "packageManager": "yarn@4.10.3",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/larswittenberg/nextjs-tailwindcss-kickstarter.git"
-  },
   "scripts": {
-    "dev": "next dev",
-    "dev-https": "next dev -p 3001 & npx local-ssl-proxy --source 3000 --target 3001",
-    "build": "next build",
-    "start": "next start",
-    "clean": "npx rimraf .next",
-    "cleanAll": "rm -rf node_modules && rm yarn.lock",
-    "lint": "next lint",
-    "format": "prettier --write .",
-    "export": "npx rimraf .next && next build && next export",
     "setup": "tsx _installer/install.ts"
   },
-  "dependencies": {
-    "@formatjs/intl-localematcher": "^0.6.2",
-    "@mdx-js/loader": "^3.1.1",
-    "@mdx-js/react": "^3.1.1",
-    "@next/mdx": "16.0.3",
-    "@tailwindcss/postcss": "^4.1.17",
-    "@tailwindcss/typography": "^0.5.19",
-    "class-variance-authority": "^0.7.0",
-    "classnames": "^2.5.1",
-    "lucide-react": "^0.417.0",
-    "negotiator": "^1.0.0",
-    "next": "16.0.3",
-    "postcss": "^8.5.6",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
-    "tailwind-merge": "^2.4.0",
-    "tailwindcss": "^4.1.17"
-  },
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^7.0.2",
-    "@next/eslint-plugin-next": "16.0.3",
-    "@types/mdx": "^2.0.13",
-    "@types/negotiator": "^0.6.4",
-    "@types/node": "^24.10.1",
-    "@types/react": "19.2.6",
-    "@typescript-eslint/eslint-plugin": "^8.47.0",
-    "@typescript-eslint/parser": "^8.47.0",
-    "acorn": "^8.15.0",
-    "eslint": "^9.39.1",
-    "eslint-config-next": "16.0.3",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
     "inquirer": "^10.1.2",
-    "prettier": "^3.6.2",
-    "prettier-plugin-tailwindcss": "^0.7.1",
-    "sass": "^1.94.1",
-    "shadcn-ui": "^0.9.5",
     "tsx": "^4.16.2",
-    "typescript": "^5.9.3"
-  },
-  "resolutions": {
-    "@typescript-eslint/eslint-plugin": "^8.45.0",
-    "@typescript-eslint/parser": "^8.45.0",
-    "eslint-plugin-react-hooks": "^6.1.0",
-    "@types/react": "19.2.2"
+    "@types/inquirer": "^9.0.7"
   }
 }

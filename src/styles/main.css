@@ -8,6 +8,7 @@
 @theme {
 	--color-orange: #ef7c17;
 	--color-darkblue: #1c2532;
+	/* --- shadcn-ui theme start --- */
 }
 
 ::selection {
