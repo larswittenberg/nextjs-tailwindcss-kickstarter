@@ -47,6 +47,7 @@ const rootPackageJsonPath = path.resolve(projectRoot, 'package.json');
 const basePackageJsonPath = path.resolve(templatesDir, 'package.base.json');
 const nextConfigPath = path.resolve(projectRoot, 'next.config.js');
 const mainCssPath = path.resolve(projectRoot, 'src/styles/main.css');
+const installerChoicesPath = path.resolve(projectRoot, 'src/config/installer-choices.json');
 
 // --- Main Installer Logic ---
 async function runInstaller() {
@@ -121,6 +122,16 @@ async function runInstaller() {
 }
 
 // --- File & Config Modification Functions ---
+
+async function saveInstallerOptions(answers: Record<string, 'Yes' | 'No'>) {
+	console.log('Saving installer choices...');
+	try {
+		fs.writeFileSync(installerChoicesPath, JSON.stringify(answers, null, 2) + '\n');
+		console.log(`- Choices saved to 'src/config/installer-choices.json'.`);
+	} catch (error) {
+		console.error(`- Error saving installer choices:`, error);
+	}
+}
 
 async function buildPackageJson(selectedModules: Module[]) {
   console.log('Creating package.json...');
