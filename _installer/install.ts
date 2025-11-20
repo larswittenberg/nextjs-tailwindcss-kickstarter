@@ -50,7 +50,7 @@ const mainCssPath = path.resolve(projectRoot, 'src/styles/main.css');
 
 // --- Main Installer Logic ---
 async function runInstaller() {
-  console.log('🚀 Next.js Kickstarter Installer wird gestartet...');
+  console.log('🚀 Starting Next.js Kickstarter Installer...');
 
   const manifest: Manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
 
@@ -58,14 +58,14 @@ async function runInstaller() {
   const prompts = manifest.modules.map(mod => ({
     type: 'list' as const,
     name: mod.id,
-    message: `Soll '${mod.name}' hinzugefügt werden? (${mod.description})`,
+    message: `Should '${mod.name}' be added? (${mod.description})`,
     choices: ['Yes', 'No'] as const,
     default: 'No' as const,
   }));
   const answers = await inquirer.prompt(prompts);
 
   const selectedModules = manifest.modules.filter(mod => answers[mod.id] === 'Yes');
-  console.log('\nAusgewählte Module:', selectedModules.map(m => m.name).join(', ') || 'Keine', '\n');
+  console.log('\nSelected modules:', selectedModules.map(m => m.name).join(', ') || 'None', '\n');
 
   // 2. Build and Write Final package.json
   await buildPackageJson(selectedModules);
@@ -83,7 +83,7 @@ async function runInstaller() {
     {
         type: 'list' as const,
         name: 'shouldCleanup',
-        message: 'Soll das Installer-Skript nach der Ausführung gelöscht werden? (Empfohlen)',
+        message: 'Should the installer script be deleted after execution? (Recommended)',
         choices: ['Yes', 'No'] as const,
         default: 'No' as const,
     },
@@ -92,16 +92,16 @@ async function runInstaller() {
   if (shouldCleanup === 'Yes') {
     await cleanupInstaller();
   } else {
-    console.log('\nInstaller-Skript wird beibehalten. Du kannst es später erneut ausführen.');
+    console.log('\nInstaller script will be kept. You can run it again later.');
   }
 
-  console.log('🎉 Setup abgeschlossen! Viel Spaß beim Codieren!');
+  console.log('🎉 Setup complete! Happy coding!');
 }
 
 // --- File & Config Modification Functions ---
 
 async function buildPackageJson(selectedModules: Module[]) {
-  console.log('package.json wird erstellt...');
+  console.log('Creating package.json...');
   const basePackageJson = JSON.parse(fs.readFileSync(basePackageJsonPath, 'utf-8'));
 
   for (const module of selectedModules) {
@@ -120,28 +120,28 @@ async function buildPackageJson(selectedModules: Module[]) {
   basePackageJson.scripts.setup = 'tsx _installer/install.ts';
 
   fs.writeFileSync(rootPackageJsonPath, JSON.stringify(basePackageJson, null, 2) + '\n');
-  console.log('package.json erfolgreich erstellt.');
+  console.log('package.json successfully created.');
 }
 
 async function handleFileCopying(selectedModules: Module[]) {
-  console.log('Dateien werden kopiert...');
+  console.log('Copying files...');
   for (const module of selectedModules) {
     if (!module.filesToCopy) continue;
     for (const op of module.filesToCopy) {
       const source = path.resolve(templatesDir, op.from);
       const dest = path.resolve(projectRoot, op.to);
       if (!fs.existsSync(source)) {
-        console.log(`- Übersprungen: Quelle nicht gefunden (${op.from})`);
+        console.log(`- Skipped: Source not found (${op.from})`);
         continue;
       }
       fs.cpSync(source, dest, { recursive: true });
-      console.log(`- '${op.from}' nach '${op.to}' kopiert.`);
+      console.log(`- Copied '${op.from}' to '${op.to}'.`);
     }
   }
 }
 
 async function updateNextConfig(selectedModules: Module[]) {
-  console.log('next.config.js wird aktualisiert...');
+  console.log('Updating next.config.js...');
   let content = fs.readFileSync(nextConfigPath, 'utf-8');
 
   for (const module of selectedModules) {
@@ -153,7 +153,7 @@ async function updateNextConfig(selectedModules: Module[]) {
             'reactStrictMode: true,',
             'reactStrictMode: true,\n\tsassOptions: { implementation: "sass-embedded", },'
         );
-        console.log(`- 'sassOptions' zu next.config.js hinzugefügt.`);
+        console.log(`- Added 'sassOptions' to next.config.js.`);
     }
     if (mods.addMdxWrapper) {
         const mdxConfig = `const withMDX = require('@next/mdx')({
@@ -177,15 +177,15 @@ async function updateNextConfig(selectedModules: Module[]) {
             "pageExtensions: ['js', 'jsx', 'ts', 'tsx']",
             "pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx']"
         );
-        console.log(`- 'withMDX'-Wrapper zu next.config.js hinzugefügt.`);
+        console.log(`- Added 'withMDX' wrapper to next.config.js.`);
     }
   }
   fs.writeFileSync(nextConfigPath, content);
-  console.log('next.config.js aktualisiert.');
+  console.log('next.config.js updated.');
 }
 
 async function updateCssFiles(selectedModules: Module[]) {
-  console.log('CSS-Dateien werden aktualisiert...');
+  console.log('Updating CSS files...');
   let content = fs.readFileSync(mainCssPath, 'utf-8');
   for (const module of selectedModules) {
     if (!module.cssModifications) continue;
@@ -193,21 +193,21 @@ async function updateCssFiles(selectedModules: Module[]) {
 
     if (mods.addPlugin) {
       content = content.replace('@import \'tailwindcss\';', `@import 'tailwindcss';\n${mods.addPlugin}`);
-      console.log(`- Plugin '${mods.addPlugin}' zu main.css hinzugefügt.`);
+      console.log(`- Added plugin '${mods.addPlugin}' to main.css.`);
     }
     if (mods.addBlock) {
       content = content.replace(mods.addBlock.anchor, mods.addBlock.content);
-      console.log(`- Theme-Block zu main.css hinzugefügt.`);
+      console.log(`- Added theme block to main.css.`);
     }
   }
   fs.writeFileSync(mainCssPath, content);
-  console.log('CSS-Dateien aktualisiert.');
+  console.log('CSS files updated.');
 }
 
 // --- Execution & Cleanup Functions ---
 
 async function installDependencies() {
-  console.log('Abhängigkeiten werden installiert...');
+  console.log('Installing dependencies...');
   const packageManager = 'yarn';
 
   return new Promise<void>((resolve, reject) => {
@@ -216,17 +216,17 @@ async function installDependencies() {
     child.stderr?.pipe(process.stderr);
     child.on('close', (code) => {
       if (code === 0) {
-        console.log(`Abhängigkeiten erfolgreich installiert mit '${packageManager}'.`);
+        console.log(`Dependencies successfully installed with '${packageManager}'.`);
         resolve();
       } else {
-        reject(new Error(`'${packageManager} install' fehlgeschlagen mit Code ${code}`));
+        reject(new Error(`'${packageManager} install' failed with code ${code}`));
       }
     });
   });
 }
 
 async function cleanupInstaller() {
-  console.log('Installationsdateien werden bereinigt...');
+  console.log('Cleaning up installation files...');
   const packageJson = JSON.parse(fs.readFileSync(rootPackageJsonPath, 'utf-8'));
 
   if (packageJson.scripts?.setup) {
@@ -235,11 +235,11 @@ async function cleanupInstaller() {
   fs.writeFileSync(rootPackageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
   fs.rmSync(path.resolve(projectRoot, '_installer'), { recursive: true, force: true });
 
-  console.log('Installer-Dateien und setup-Skript entfernt.');
+  console.log('Installer files and setup script removed.');
 }
 
 // --- Run Script ---
 runInstaller().catch(error => {
-  console.error('\nEin schwerwiegender Fehler ist während der Installation aufgetreten:', error);
+  console.error('\nA critical error occurred during installation:', error);
   process.exit(1);
 });

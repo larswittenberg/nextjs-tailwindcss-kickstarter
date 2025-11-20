@@ -4,7 +4,7 @@
     {
       "id": "scss",
       "name": "SCSS Support",
-      "description": "Fügt Unterstützung für SASS/SCSS hinzu.",
+      "description": "Adds support for SASS/SCSS.",
       "type": "styling",
       "selected": true,
       "devDependencies": { "sass": "^1.94.1" },
@@ -16,7 +16,7 @@
     {
       "id": "mdx",
       "name": "MDX Support",
-      "description": "Ermöglicht die Verwendung von .mdx-Dateien als Seiten.",
+      "description": "Enables the use of .mdx files as pages.",
       "type": "features",
       "selected": true,
       "dependencies": {
@@ -34,7 +34,7 @@
     {
       "id": "tailwind-typography",
       "name": "Tailwind CSS Typography",
-      "description": "Fügt das @tailwindcss/typography-Plugin hinzu.",
+      "description": "Adds the @tailwindcss/typography plugin.",
       "type": "styling",
       "selected": true,
       "dependencies": { "@tailwindcss/typography": "^0.5.19" },
@@ -44,7 +44,7 @@
     {
       "id": "shadcn-ui",
       "name": "shadcn/ui",
-      "description": "Integriert die shadcn/ui-Komponentenbibliothek.",
+      "description": "Integrates the shadcn/ui component library.",
       "type": "features",
       "selected": true,
       "dependencies": {
