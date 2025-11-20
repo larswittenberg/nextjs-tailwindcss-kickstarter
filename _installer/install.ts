@@ -50,52 +50,74 @@ const mainCssPath = path.resolve(projectRoot, 'src/styles/main.css');
 
 // --- Main Installer Logic ---
 async function runInstaller() {
-  console.log('🚀 Starting Next.js Kickstarter Installer...');
+	console.log('🚀 Starting Next.js Kickstarter Installer...');
 
-  const manifest: Manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+	const manifest: Manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+	const nonInteractive = process.argv.includes('--yes');
+	let answers: Record<string, 'Yes' | 'No'>;
 
-  // 1. Interactive Prompts
-  const prompts = manifest.modules.map(mod => ({
-    type: 'list' as const,
-    name: mod.id,
-    message: `Should '${mod.name}' be added? (${mod.description})`,
-    choices: ['Yes', 'No'] as const,
-    default: 'No' as const,
-  }));
-  const answers = await inquirer.prompt(prompts);
+	if (nonInteractive) {
+		console.log('Non-interactive mode (--yes flag detected). Answering "Yes" to all modules.');
+		answers = manifest.modules.reduce(
+			(acc, mod) => {
+				acc[mod.id] = 'Yes';
+				return acc;
+			},
+			{} as Record<string, 'Yes' | 'No'>,
+		);
+	} else {
+		// 1. Interactive Prompts
+		const prompts = manifest.modules.map((mod) => ({
+			type: 'list' as const,
+			name: mod.id,
+			message: `Should '${mod.name}' be added? (${mod.description})`,
+			choices: ['Yes', 'No'] as const,
+			default: 'No' as const,
+		}));
+		answers = await inquirer.prompt(prompts);
+	}
 
-  const selectedModules = manifest.modules.filter(mod => answers[mod.id] === 'Yes');
-  console.log('\nSelected modules:', selectedModules.map(m => m.name).join(', ') || 'None', '\n');
+	await saveInstallerOptions(answers);
 
-  // 2. Build and Write Final package.json
-  await buildPackageJson(selectedModules);
+	const selectedModules = manifest.modules.filter((mod) => answers[mod.id] === 'Yes');
+	console.log('\nSelected modules:', selectedModules.map((m) => m.name).join(', ') || 'None', '\n');
 
-  // 3. Apply file and config changes for selected features
-  await handleFileCopying(selectedModules);
-  await updateNextConfig(selectedModules);
-  await updateCssFiles(selectedModules);
+	// 2. Build and Write Final package.json
+	await buildPackageJson(selectedModules);
 
-  // 4. Install final dependencies
-  await installDependencies();
+	// 3. Apply file and config changes for selected features
+	await handleFileCopying(selectedModules);
+	await updateNextConfig(selectedModules);
+	await updateCssFiles(selectedModules);
 
-  // 5. Ask about cleanup
-  const { shouldCleanup } = await inquirer.prompt([
-    {
-        type: 'list' as const,
-        name: 'shouldCleanup',
-        message: 'Should the installer script be deleted after execution? (Recommended)',
-        choices: ['Yes', 'No'] as const,
-        default: 'No' as const,
-    },
-  ]);
+	// 4. Install final dependencies
+	await installDependencies();
 
-  if (shouldCleanup === 'Yes') {
-    await cleanupInstaller();
-  } else {
-    console.log('\nInstaller script will be kept. You can run it again later.');
-  }
+	// 5. Ask about cleanup
+	let shouldCleanup: 'Yes' | 'No';
+	if (nonInteractive) {
+		console.log('Non-interactive mode: Auto-agreeing to cleanup.');
+		shouldCleanup = 'Yes';
+	} else {
+		const { shouldCleanup: cleanupAnswer } = await inquirer.prompt([
+			{
+				type: 'list' as const,
+				name: 'shouldCleanup',
+				message: 'Should the installer script be deleted after execution? (Recommended)',
+				choices: ['Yes', 'No'] as const,
+				default: 'No' as const,
+			},
+		]);
+		shouldCleanup = cleanupAnswer;
+	}
 
-  console.log('🎉 Setup complete! Happy coding!');
+	if (shouldCleanup === 'Yes') {
+		await cleanupInstaller();
+	} else {
+		console.log('\nInstaller script will be kept. You can run it again later.');
+	}
+
+	console.log('🎉 Setup complete! Happy coding!');
 }
 
 // --- File & Config Modification Functions ---
