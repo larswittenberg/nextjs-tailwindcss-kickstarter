@@ -126,6 +126,10 @@ async function runInstaller() {
 async function saveInstallerOptions(answers: Record<string, 'Yes' | 'No'>) {
 	console.log('Saving installer choices...');
 	try {
+		const configDir = path.dirname(installerChoicesPath);
+		if (!fs.existsSync(configDir)) {
+			fs.mkdirSync(configDir, { recursive: true });
+		}
 		fs.writeFileSync(installerChoicesPath, JSON.stringify(answers, null, 2) + '\n');
 		console.log(`- Choices saved to 'src/config/installer-choices.json'.`);
 	} catch (error) {
