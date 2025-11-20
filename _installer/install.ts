@@ -56,14 +56,15 @@ async function runInstaller() {
 
   // 1. Interactive Prompts
   const prompts = manifest.modules.map(mod => ({
-    type: 'confirm',
+    type: 'list' as const,
     name: mod.id,
     message: `Soll '${mod.name}' hinzugefügt werden? (${mod.description})`,
-    default: mod.selected,
+    choices: ['Yes', 'No'] as const,
+    default: 'No' as const,
   }));
   const answers = await inquirer.prompt(prompts);
 
-  const selectedModules = manifest.modules.filter(mod => answers[mod.id]);
+  const selectedModules = manifest.modules.filter(mod => answers[mod.id] === 'Yes');
   console.log('\nAusgewählte Module:', selectedModules.map(m => m.name).join(', ') || 'Keine', '\n');
 
   // 2. Build and Write Final package.json
@@ -80,14 +81,15 @@ async function runInstaller() {
   // 5. Ask about cleanup
   const { shouldCleanup } = await inquirer.prompt([
     {
-        type: 'confirm',
+        type: 'list' as const,
         name: 'shouldCleanup',
         message: 'Soll das Installer-Skript nach der Ausführung gelöscht werden? (Empfohlen)',
-        default: true,
+        choices: ['Yes', 'No'] as const,
+        default: 'No' as const,
     },
   ]);
 
-  if (shouldCleanup) {
+  if (shouldCleanup === 'Yes') {
     await cleanupInstaller();
   } else {
     console.log('\nInstaller-Skript wird beibehalten. Du kannst es später erneut ausführen.');
