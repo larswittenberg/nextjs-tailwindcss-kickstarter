@@ -1,0 +1,61 @@
+export const metadata = {
+	title: 'MDX Demo-Page | Next.js + Tailwind CSS Kickstarter',
+};
+
+export const DemoComponent = () => (
+	<div className="not-prose mb-8 border-4 border-solid border-black bg-red-600 p-2 text-2xl text-white">
+		This div is an exported component
+	</div>
+);
+
+# This is a MDX page - written in Markdown
+
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum est quidem, consequatur ipsum temporibus eius vero vel placeat fugit iste dolores, eligendi voluptatem perspiciatis possimus ab architecto quam dolor ea.Distinctio nihil officia veniam! Nihil suscipit earum, laudantium nemo totam velit consectetur voluptas non incidunt officia. Dolores, ex asperiores maxime ad fuga minima libero, excepturi labore assumenda ipsam atque molestiae?
+
+## Two jsx components
+
+<DemoComponent />
+
+<div style={{ padding: '1rem', margin: '1rem 0', backgroundColor: 'violet' }}>
+	This is a div with some inline styles
+</div>
+
+## Links
+
+Advanced Feature: [Using MDX with Next.js](https://nextjs.org/docs/app/building-your-application/configuring/mdx)
+
+## Unordered list
+
+- One
+- Two
+- Three
+
+## Ordered list
+
+1. Lorem ipsum dolor sit amet
+2. Consectetur adipiscing elit
+3. Integer molestie lorem at massa
+
+## Blockquotes
+
+> Blockquotes can also be nested...
+>
+> > ...by using additional greater-than signs right next to each other...
+
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum est quidem, consequatur ipsum temporibus eius vero vel placeat fugit iste dolores, eligendi voluptatem perspiciatis possimus ab architecto quam dolor ea.Distinctio nihil officia veniam! Nihil suscipit earum, laudantium nemo totam velit consectetur voluptas non incidunt officia. Dolores, ex asperiores maxime ad fuga minima libero, excepturi labore assumenda ipsam atque molestiae?
+
+## Code
+
+Inline `code`
+
+```js
+var foo = function (bar) {
+	return bar++;
+};
+
+console.log(foo(5));
+```
+
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum est quidem, consequatur ipsum temporibus eius vero vel placeat fugit iste dolores, eligendi voluptatem perspiciatis possimus ab architecto quam dolor ea.Distinctio nihil officia veniam! Nihil suscipit earum, laudantium nemo totam velit consectetur voluptas non incidunt officia. Dolores, ex asperiores maxime ad fuga minima libero, excepturi labore assumenda ipsam atque molestiae?
+
+export default ({ children }) => <div className="prose prose-sm mx-auto sm:prose lg:prose-lg">{children}</div>;
