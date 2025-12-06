@@ -7,8 +7,8 @@
     "setup:ci": "yarn install --silent && yarn tsx _installer/install.ts --yes"
   },
   "devDependencies": {
-    "@types/inquirer": "^9.0.7",
+    "@types/inquirer": "^9.0.9",
     "inquirer": "^10.1.2",
-    "tsx": "^4.16.2"
+    "tsx": "^4.21.0"
   }
 }
