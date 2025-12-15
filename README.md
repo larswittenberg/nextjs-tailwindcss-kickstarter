@@ -4,6 +4,14 @@ This repository serves as a feature-rich kickstarter template for modern Next.js
 
 [Visit Demo-Website](https://nextjs-tailwindcss-kickstarter.vercel.app/)
 
+## Update Demo Website
+
+To update the demo website, follow these steps:
+
+- Check new packages versions in `_installer/templates/package.base.json`
+- commit changes and push to main branch
+- On Vercel dashboard, a new deployment is automatically triggered and runs the `setup:ci` script
+
 ## Getting Started
 
 This template includes an interactive installer to help you customize your initial project setup.
