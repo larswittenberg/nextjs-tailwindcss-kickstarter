@@ -1,7 +1,7 @@
 {
   "name": "nextjs-kickstarter-installer",
   "private": true,
-  "packageManager": "yarn@4.10.3",
+  "packageManager": "yarn@4.12.0",
   "scripts": {
     "setup": "yarn install --silent && yarn tsx _installer/install.ts",
     "setup:ci": "yarn install --silent && yarn tsx _installer/install.ts --yes"
